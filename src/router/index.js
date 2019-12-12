@@ -51,52 +51,17 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '概括', icon: 'dashboard' }
     }]
   },
-
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
-      }
-    ]
-  },
-
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
-    ]
-  },
-
+  
   {
     path: '/nested',
     component: Layout,
     redirect: '/nested/menu1',
     name: 'Nested',
     meta: {
-      title: 'Nested',
+      title: '微信管理',
       icon: 'nested'
     },
     children: [
@@ -147,6 +112,82 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/call',
+    component: Layout,
+    redirect: '/call/callrecords',
+    name: 'Call',
+    meta: {
+      title: '通话与短信',
+      icon: 'nested'
+    },
+    children:[
+      {
+        path: 'call1',
+        component: () => import('@/views/call/call1/index'),
+        meta: { title: '通话记录' },
+        children:[
+          {
+            path: 'call_details',
+            component: () => import('@/views/call/call1/call_details/index'),
+            name: 'call_details',
+            meta: { title: '详细通话记录' }
+          },
+          {
+            path: 'breathe_details',
+            component: () => import('@/views/call/call1/breathe_details/index'),
+            name: 'breathe_details',
+            meta: { title: '呼出详单' }
+          }
+        ]
+      },
+
+      {
+        path: 'callvoice',
+        component: () => import('@/views/call/callvoice/index'),
+        meta: { title: '通话录音' }
+      },
+      {
+        path: 'mobile_sms',
+        component: () => import('@/views/call/mobile_sms/index'),
+        meta: { title: '手机短信' }
+      },
+    ]
+  },
+  {
+    path: '/example',
+    component: Layout,
+    redirect: '/example/table',
+    name: 'Example',
+    meta: { title: '敏感行为', icon: 'example' },
+    children: [
+      {
+        path: 'table',
+        name: 'Table',
+        component: () => import('@/views/table/index'),
+        meta: { title: '行为详情', icon: 'table' }
+      },
+      {
+        path: 'tree',
+        name: 'Tree',
+        component: () => import('@/views/tree/index'),
+        meta: { title: 'Tree', icon: 'tree' }
+      }
+    ]
+  },
+
+  {
+    path: '/form',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Form',
+        component: () => import('@/views/form/index'),
+        meta: { title: '数据统计', icon: 'form' }
+      }
+    ]
+  },
 
   {
     path: 'external-link',
@@ -166,7 +207,8 @@ export const constantRoutes = [
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
+  routes: constantRoutes,
+  mode: 'history',  //去掉url中的#
 })
 
 const router = createRouter()

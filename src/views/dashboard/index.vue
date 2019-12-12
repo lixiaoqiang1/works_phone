@@ -1,6 +1,7 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">name: {{ name }}</div>
+    <!-- <div class="dashboard-text">name: {{ name }}</div> -->
+    <div>这里是概括这里是概括</div>
   </div>
 </template>
 
@@ -9,22 +10,24 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'Dashboard',
-  computed: {
-    ...mapGetters([
-      'name'
-    ])
+  // computed: {
+  //   ...mapGetters([
+  //     'name'
+  //   ])
+  // },
+  data(){
+    return{
+
+    }
+  },
+  created(){
+    console.log('111')
   }
 }
 </script>
 
-<style lang="scss" scoped>
-.dashboard {
-  &-container {
-    margin: 30px;
-  }
-  &-text {
-    font-size: 30px;
-    line-height: 46px;
-  }
+<style scoped>
+.dashboard-container {
+  margin: 20px;
 }
 </style>
