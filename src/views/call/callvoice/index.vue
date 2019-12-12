@@ -1,3 +1,14 @@
 <template>
-    <div>录音1111</div>
+    <div class="callvoice">
+        <!-- 录音11110 -->
+        
+    </div>
 </template>
+<script>
+export default {
+    
+}
+</script>
+<style lang="stylus" scoped>
+
+</style>
