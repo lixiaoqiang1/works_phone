@@ -16,7 +16,7 @@ export default {
 .app-main{
   background:#f8f8f8;padding: 10px;
 }
-.inner_template{
+.padding10{
   padding:10px;background: white;
 }
 </style>
