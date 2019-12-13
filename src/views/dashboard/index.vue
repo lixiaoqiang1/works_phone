@@ -30,4 +30,5 @@ export default {
 .dashboard-container {
   margin: 20px;
 }
+
 </style>
