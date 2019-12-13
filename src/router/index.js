@@ -122,26 +122,6 @@ export const constantRoutes = [
       icon: 'nested'
     },
     children:[
-      // {
-      //   path: 'call1',
-      //   component: () => import('@/views/call/call1/index'),
-      //   meta: { title: '通话记录' },
-      //   children:[
-      //     {
-      //       path: 'call_details',
-      //       component: () => import('@/views/call/call1/call_details/index'),
-      //       name: 'call_details',
-      //       meta: { title: '详细通话记录' }
-      //     },
-      //     {
-      //       path: 'breathe_details',
-      //       component: () => import('@/views/call/call1/breathe_details/index'),
-      //       name: 'breathe_details',
-      //       meta: { title: '呼出详单' }
-      //     }
-      //   ]
-      // },
-
       {
         path: 'callrecords',
         component: () => import('@/views/call/callrecords/index'),
