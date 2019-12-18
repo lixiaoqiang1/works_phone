@@ -19,6 +19,8 @@ export default {
 .padding10{
   padding:15px 10px;background: white;
 }
+.bule_color{color:rgb(64, 158, 255)}
+.danger_color{color: rgb(245, 108, 108)}
 </style>
 
 

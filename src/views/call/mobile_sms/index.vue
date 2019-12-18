@@ -29,7 +29,7 @@
         <!-- 头部菜单end -->
         <!-- 表格 -->
         <div class="table">
-            <el-table stripe  :data="userList.slice((currentPage-1)*pagesize,currentPage*pagesize)" style="width: 100%">
+            <el-table stripe :data="userList.slice((page_index-1)*page_size,page_index*page_size)" style="width: 100%">
                 <el-table-column prop="isdate" label="日期"></el-table-column>
                 <el-table-column prop="isphone" label="客户电话"></el-table-column>
                 <el-table-column prop="sendtimes" label="发送/接收时间"></el-table-column>
@@ -45,20 +45,15 @@
                 :filter-method="filterTag"
                 filter-placement="bottom-end"></el-table-column>
             </el-table>
-            <el-pagination
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-                :current-page="currentPage"
-                :page-sizes="[5, 10, 20, 40]" 
-                :page-size="pagesize"         
-                layout="total, sizes, prev, pager, next, jumper"
-                :total="userList.length">   
-            </el-pagination>
+            <!-- 分页 -->
+            <page-nation :total="userList.length" @pageChange="pageChange"></page-nation>
+            <!-- 分页end -->
         </div>
         <!-- 表格end -->
     </div>
 </template>
 <script>
+import pageNation from '@/components/pageNation/index'     // 引入分页
   export default {
     data() {
       return {
@@ -69,14 +64,18 @@
             {value: '部门二',label: '部门二'}
         ],
         search:'',//搜索
-        currentPage:1, //初始页
-        pagesize:5,    //    每页的数据
+        page_index: 1, // 初始页
+	    page_total: 200, // 总数据条数
+        page_size: 8,//每页数量
         userList: []//table数据
       };
     },
     created: function () {
         //表格渲染
         this.handleUserList();
+    },
+    components: {
+      pageNation
     },
     methods: {
         //表导航筛选
@@ -92,14 +91,12 @@
         filterjt(value, row) {
             return row.through === value;
         },
-        // 初始页currentPage、初始每页数据数pagesize和数据data
-        handleSizeChange: function (size) {
-            this.pagesize = size;
-            console.log(this.pagesize)  //每页下拉显示数据
-        },
-        handleCurrentChange: function(currentPage){
-            this.currentPage = currentPage;
-            console.log(this.currentPage)  //点击第几页
+        // 初始页page_index、初始每页数据数page_size和数据data
+        pageChange (item) {
+          console.log(item)
+          this.page_index = item.page_index;
+          this.page_size = item.page_limit;
+          // this.initData() //改变页码，重新渲染页面
         },
         handleUserList() {
             //表格渲染

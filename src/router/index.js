@@ -62,7 +62,7 @@ export const constantRoutes = [
     name: 'Nested',
     meta: {
       title: '微信管理',
-      icon: 'nested'
+      icon: 'wecheat'
     },
     children: [
       {
@@ -119,13 +119,21 @@ export const constantRoutes = [
     name: 'Call',
     meta: {
       title: '通话与短信',
-      icon: 'nested'
+      icon: 'tonghua_sms'
     },
     children:[
+     
       {
         path: 'callrecords',
         component: () => import('@/views/call/callrecords/index'),
-        meta: { title: '通话记录' }
+        meta: { title: '通话记录' },
+      },
+      { //需要跳转的页面，
+        path: 'records_detail_index',
+        component: () => import('@/views/call/callrecords/records_detail/index'),
+        name: 'records_detail',
+        meta: { title: '查看某人详细通话记录', noCache: true, activeMenu: '@/views/call/callrecords/records_detail/index'},
+        hidden: true   //是否显示在菜单
       },
       {
         path: 'callvoice',

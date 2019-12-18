@@ -19,6 +19,20 @@
           auto-complete="on"
         />
       </el-form-item>
+      <!-- <el-form-item prop="yanzheng">
+        <span class="svg-container">
+          <svg-icon icon-class="language" />
+        </span>
+        <el-input
+          ref="yanzheng"
+          v-model="loginForm.yanzheng"
+          placeholder="请输入验证码"
+          name="yanzheng"
+          type="text"
+          tabindex="3"
+          auto-complete="on"
+        />
+      </el-form-item> -->
 
       <el-form-item prop="password">
         <span class="svg-container">

@@ -146,7 +146,7 @@ import pageNation from '@/components/pageNation/index'     // 引入分页
         handleUserList() {
             //表格渲染
             let _this = this;
-            _this.axios.get('/api/tonghuajilu').then((res)=>{
+            _this.axios.get('/api/tonghuajilu2').then((res)=>{
                 console.log(res.data.data);
                 _this.userList = res.data.data
             }).catch((err)=>{
@@ -177,4 +177,4 @@ import pageNation from '@/components/pageNation/index'     // 引入分页
         width: 100%;margin-top: 15px;display: inline-block
     }
     .el-pagination{text-align: center;margin-top: 15px;}
-</style>
+</style> 
