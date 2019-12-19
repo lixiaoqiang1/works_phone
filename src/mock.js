@@ -1,4 +1,30 @@
 const Mock=require('mockjs');
+
+//好友微信
+Mock.mock('/api/haoyouweixin',{
+    'data|1-1':[
+        {
+            'isid':'1512','images1':'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80','wx_id1':'BigMiao-xzt',
+            'wx_name1':'大喵',
+            'beizhu':'这是大喵喵',
+            'images2':'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80',
+            'wx_id2':'微信昵称',
+            'wx_name2':'微信昵称微信昵称',
+            'follow_up':'张三 18628458525',
+            'last_time':'2019-11-29 10:42',
+        },
+        {
+            'isid':'1512','images1':'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80','wx_id1':'BigMiao-xzt',
+            'wx_name1':'大喵',
+            'beizhu':'这是大喵喵',
+            'images2':'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80',
+            'wx_id2':'微信昵称',
+            'wx_name2':'微信昵称微信昵称',
+            'follow_up':'张三 18628458525',
+            'last_time':'2019-11-29 10:42',
+        },
+    ]
+});
 //通话记录
 Mock.mock('/api/tonghuajilu',{
     'data|1-1':[

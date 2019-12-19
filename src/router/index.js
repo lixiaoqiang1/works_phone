@@ -56,9 +56,9 @@ export const constantRoutes = [
   },
   
   {
-    path: '/nested',
+    path: '/friends',
     component: Layout,
-    redirect: '/nested/menu1',
+    redirect: '/friends/employees',
     name: 'Nested',
     meta: {
       title: '微信管理',
@@ -66,48 +66,42 @@ export const constantRoutes = [
     },
     children: [
       {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
+        path: 'employees',
+        component: () => import('@/views/friends/employees/index'), // Parent router-view
+        name: 'employees',
         meta: { title: '员工微信列表' },
         children: [
           {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
+            path: 'wx_friends',
+            component: () => import('@/views/friends/employees/wx_friends'),
+            name: 'wx_friends',
+            meta: { title: '微信聊天/好友聊天' },
             children: [
               {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
+                path: 'conlog',
+                component: () => import('@/views/friends/employees/wx_friends/conlog'),
+                name: 'conlog',
+                meta: { title: '登录日志' }
               },
               {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
+                path: 'group_chat',
+                component: () => import('@/views/friends/employees/wx_friends/group_chat'),
+                name: 'group_chat',
+                meta: { title: '微信群聊' }
               }
             ]
           },
           {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
+            path: 'newfriends',
+            component: () => import('@/views/friends/employees/newfriends'),
+            name: 'newfriends',
+            meta: { title: '新加好友' }
+          },
         ]
       },
       {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
+        path: 'friends_list',
+        component: () => import('@/views/friends/friends_list/index'),
         meta: { title: '好友列表' }
       }
     ]
@@ -178,6 +172,57 @@ export const constantRoutes = [
         name: 'Form',
         component: () => import('@/views/form/index'),
         meta: { title: '数据统计', icon: 'form' }
+      }
+    ]
+  },
+  {
+    path: '/shezhi',
+    component: Layout,
+    redirect: '/shezhi/menu1',
+    name: 'Nested',
+    meta: {
+      title: '设置',
+      icon: 'wecheat'
+    },
+    children: [
+      {
+        path: 'menu1',
+        component: () => import('@/views/shezhi/menu1/index'), // Parent router-view
+        name: 'Menu1',
+        meta: { title: '员工微信列表' },
+        children: [
+          {
+            path: 'menu1-1',
+            component: () => import('@/views/shezhi/menu1/menu1-1'),
+            name: 'Menu1-1',
+            meta: { title: 'Menu1-1' }
+          },
+          {
+            path: 'menu1-2',
+            component: () => import('@/views/shezhi/menu1/menu1-2'),
+            name: 'Menu1-2',
+            meta: { title: 'Menu1-2' },
+            children: [
+              {
+                path: 'menu1-2-1',
+                component: () => import('@/views/shezhi/menu1/menu1-2/menu1-2-1'),
+                name: 'Menu1-2-1',
+                meta: { title: 'Menu1-2-1' }
+              },
+              {
+                path: 'menu1-2-2',
+                component: () => import('@/views/shezhi/menu1/menu1-2/menu1-2-2'),
+                name: 'Menu1-2-2',
+                meta: { title: 'Menu1-2-2' }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        path: 'friends_list',
+        component: () => import('@/views/shezhi/friends_list/index'),
+        meta: { title: '好友列表' }
       }
     ]
   },

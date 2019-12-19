@@ -86,19 +86,16 @@
             <!-- 分页end -->
         </div>
         <!-- 表格end -->
-        <!-- 呼出总数 -->
-        <el-dialog title="呼出总数" :visible.sync="dialogTableVisible">
-            <el-table :data="gridData">
-                <el-table-column property="date" label="日期"></el-table-column>
-                <el-table-column property="name" label="姓名"></el-table-column>
-                <el-table-column property="address" label="地址"></el-table-column>
-            </el-table>
+        <!--  个人详情弹层 -->
+        <el-dialog title="呼出总数" :visible.sync="dialogTableVisible" width="90%">
+            <breathebox></breathebox>
         </el-dialog>
-        <!-- 呼出总数end -->
+        <!--  个人详情弹层end -->
     </div>
 </template>
 <script>
 import pageNation from '@/components/pageNation/index'     // 引入分页
+import breathebox from '@/views/call/callrecords/breathe_box/index'     // 个人详情弹层
   export default {
     data() {
       return {
@@ -110,7 +107,7 @@ import pageNation from '@/components/pageNation/index'     // 引入分页
 	    page_total: 200, // 总数据条数
         page_size: 8,//每页数量
         userList: [],//table数据
-        gridData: [{ date: '2016-05-02',name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'}],
+        // gridData: [{ date: '2016-05-02',name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'}],
         dialogTableVisible: false,
 
       };
@@ -120,7 +117,7 @@ import pageNation from '@/components/pageNation/index'     // 引入分页
         this.handleUserList();
     },
     components: {
-      pageNation
+      pageNation,breathebox
     },
     methods: {
         //表导航筛选

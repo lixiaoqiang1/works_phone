@@ -33,7 +33,8 @@
                 <el-table-column prop="isdate" label="日期" width="140"></el-table-column>
                 <el-table-column prop="isname" label="员工姓名">
                     <template scope="scope">
-                        <a class="bule_color" @click="btn_names(scope.$index, scope.row)">{{ scope.row.isname }}</a>
+                        <!-- <a class="bule_color" @click="btn_names(scope.$index, scope.row)">{{ scope.row.isname }}</a> -->
+                        <a class="bule_color">{{ scope.row.isname }}</a>
                     </template>
                 </el-table-column>
                 <el-table-column prop="department" label="部门"></el-table-column>
@@ -86,19 +87,16 @@
             <!-- 分页end -->
         </div>
         <!-- 表格end -->
-        <!-- 呼出总数 -->
-        <el-dialog title="呼出总数" :visible.sync="dialogTableVisible">
-            <el-table :data="gridData">
-                <el-table-column property="date" label="日期"></el-table-column>
-                <el-table-column property="name" label="姓名"></el-table-column>
-                <el-table-column property="address" label="地址"></el-table-column>
-            </el-table>
+        <!--  个人详情弹层 -->
+        <el-dialog title="呼出总数" :visible.sync="dialogTableVisible" width="90%">
+            <breathebox></breathebox>
         </el-dialog>
-        <!-- 呼出总数end -->
+        <!--  个人详情弹层end -->
     </div>
 </template>
 <script>
 import pageNation from '@/components/pageNation/index'     // 引入分页
+import breathebox from '@/views/call/callrecords/breathe_box/index'     // 个人详情弹层
   export default {
     data() {
       return {
@@ -110,7 +108,6 @@ import pageNation from '@/components/pageNation/index'     // 引入分页
 	    page_total: 200, // 总数据条数
         page_size: 8,//每页数量
         userList: [],//table数据
-        gridData: [{ date: '2016-05-02',name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'}],
         dialogTableVisible: false,
 
       };
@@ -120,7 +117,7 @@ import pageNation from '@/components/pageNation/index'     // 引入分页
         this.handleUserList();
     },
     components: {
-      pageNation
+      pageNation,breathebox
     },
     methods: {
         //表导航筛选
@@ -154,10 +151,10 @@ import pageNation from '@/components/pageNation/index'     // 引入分页
             })
         },
         //点击表格名字
-        btn_names(index, row) {
-            console.log(row.id);
-           this.$router.push({ name:'records_detail', query: { id: row.id }})
-        },
+        // btn_names(index, row) {
+        //     console.log(row.id);
+        //    this.$router.push({ name:'records_detail', query: { id: row.id }})
+        // },
         //点击表格数字
         btn_details(index, row) {
             console.log(row);
