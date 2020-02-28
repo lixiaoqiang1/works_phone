@@ -13,13 +13,33 @@
   width: 100%;
 }
 .form_o_right{
-  border-left: 1px #eee solid;height: 500px; padding: 20px;
+  border-left: 1px #eee solid;height: 500px; padding: 45px 20px;
 }
 .form_o_right .el-form{
   width: 350px;margin: auto;
 }
 .form_o_right .title{
   text-align: center;color: #3959e7;font-size: 28px;
+}
+.security_code{
+  position: relative;
+}
+.security_code .yanzheng{
+  position: absolute;
+  right: 10px;
+  top: 0;
+  line-height: 40px;
+  padding: 0;
+  color: #3959e7
+}
+.passwords{
+  position: relative;
+}
+.show-pwd{
+  position: absolute;
+  right: 10px;
+  top: 0;
+  line-height: 40px;
 }
 </style>
 <template>
@@ -38,25 +58,39 @@
             <el-input
               ref="username"
               v-model="loginForm.username"
-              placeholder="请输入账户名"
+              placeholder="输入手机号" autocomplete="off"
               name="username"
               type="text"
               tabindex="1"
               auto-complete="on"
             />
           </el-form-item>
-          <el-form-item prop="password">
+          <el-form-item prop="code" class="security_code">
+            <el-input
+              ref="code"
+              v-model="loginForm.code"
+              placeholder="输入验证码"
+              name="code"
+              type="text" :maxlength="4"
+              auto-complete="on"
+            />
+            <a class="yanzheng" @click="sendMsg">{{buttonName}}</a>
+          </el-form-item>
+          <el-form-item class="passwords" prop="password">
             <el-input
               :key="passwordType"
               ref="password"
               v-model="loginForm.password"
               :type="passwordType"
-              placeholder="请输入密码"
+              placeholder="输入密码"
               name="password"
               tabindex="2"
               auto-complete="on"
               @keyup.enter.native="handleLogin"
             />
+            <span class="show-pwd" @click="showPwd">
+              <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+            </span>
           </el-form-item>
           <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
           <div class="tips">
@@ -77,16 +111,18 @@ import { validUsername } from '@/utils/validate'
 export default {
   name: 'Login',
   data() {
+    //账号验证
     const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('请输入正确的用户名'))
+      if (!value) {
+        callback(new Error('手机号不能为空！'))
       } else {
         callback()
       }
     }
+    //密码验证
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('密码不能少于6位'))
+      if (!value) {
+        callback(new Error('密码不能为空！'))
       } else {
         callback()
       }
@@ -94,12 +130,18 @@ export default {
     return {
       loginForm: {
         username: '',
+        code:'',
         password: ''
       },
+      //验证
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [{ required: true, validator: validateUsername, trigger: 'blur' }],
+        password: [{ required: true,validator: validatePassword, trigger: 'blur' }]
       },
+      buttonName: "发送短信",
+      isDisabled: false,
+      time: 180,
+      
       loading: false,
       passwordType: 'password',
       redirect: undefined
@@ -124,6 +166,35 @@ export default {
         this.$refs.password.focus()
       })
     },
+    //短信倒计时
+    sendMsg() {
+      let json2 = {
+        username:this.loginForm.username
+      }
+      console.log(json2);
+      this.daojishi();
+      // sendCode(json2).then(res => {
+      //     this.daojishi();
+      // }).catch(() => {
+      //     this.$message.error('请求错误！');
+      // })
+    },
+    //倒计时
+    daojishi(){
+      let me = this;
+      me.isDisabled = true;
+      let interval = window.setInterval(function() {
+          me.buttonName = '（' + me.time + '秒）后重新发送';
+          --me.time;
+          if(me.time < 0) {
+              me.buttonName = "重新发送";
+              me.time = 10;
+              me.isDisabled = false;
+              window.clearInterval(interval);
+          }
+      }, 1000);
+    },
+    //登录
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
