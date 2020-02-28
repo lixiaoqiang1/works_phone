@@ -61,8 +61,7 @@
                   </template>
               </el-table-column>
               <el-table-column prop="beizhu" label="微信备注"></el-table-column>
-              <el-table-column prop="add_time" label="添加时间"></el-table-column>
-              <el-table-column prop="last_time" label="上次聊天"></el-table-column>
+              <el-table-column prop="add_time" label="删除时间"></el-table-column>
             </el-table>
             <!-- 分页 -->
             <el-pagination

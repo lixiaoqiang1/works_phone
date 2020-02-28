@@ -51,18 +51,31 @@
         <!-- 表格 -->
         <div class="table">
             <el-table stripe :data="userList" style="width: 100%">
-              <el-table-column label="好友微信">
+              <el-table-column label="微信群">
                 <template scope="scope">
+                  <div class="bule_color">
                     <div class="wxid"><img :src="scope.row.images1"></div>
                     <div class="wxid">
-                      <div class="wx_list">{{ scope.row.wx_id1 }}</div>
                       <div class="wx_list">{{ scope.row.wx_name1 }}</div>
                     </div>
+                  </div>
                   </template>
               </el-table-column>
-              <el-table-column prop="beizhu" label="微信备注"></el-table-column>
-              <el-table-column prop="add_time" label="添加时间"></el-table-column>
-              <el-table-column prop="last_time" label="上次聊天"></el-table-column>
+              <el-table-column label="跟进员工微信">
+                <template scope="scope">
+                  <div class="bule_color">
+                    <div class="wxid"><img :src="scope.row.images2"></div>
+                    <div class="wxid">
+                      <div class="wx_list">{{ scope.row.wx_id2 }}</div>
+                      <div class="wx_list">{{ scope.row.wx_name2 }}</div>
+                    </div>
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column prop="follow_up" label="跟进员工"  ></el-table-column>
+              <el-table-column prop="qun_num" label="群成员数"></el-table-column>
+              <el-table-column prop="add_num" label="新增好友"></el-table-column>
+              <el-table-column prop="exit_num" label="退群好友"></el-table-column>
             </el-table>
             <!-- 分页 -->
             <el-pagination
@@ -85,10 +98,7 @@
       return {
         selectdata1:'',//日期选择
         department: '',//员工部门
-        options: [
-            { value: '部门一',label: '部门一'}, 
-            {value: '部门二',label: '部门二'}
-        ],
+        options: [{ value: '部门一',label: '部门一'}, {value: '部门二',label: '部门二'}],
         loan_id:'',//微信号
         name:'',//昵称
         beizhu:'',//备注
@@ -149,8 +159,8 @@
               page:this.currentPage//选择跳页
           }
           //表格渲染
-          let _this = this;
-            _this.axios.get('/api/haoyouweixin').then((res)=>{
+            let _this = this;
+            _this.axios.get('/api/qun1').then((res)=>{
                 console.log(res.data.data);
                 _this.userList = res.data.data
             }).catch((err)=>{
@@ -177,6 +187,5 @@
           // })
       }
     }
-    
   };
 </script>

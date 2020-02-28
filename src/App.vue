@@ -1,12 +1,40 @@
 <template>
   <div id="app">
-    <router-view />
+    <router-view v-if="isRouterAlive" />
   </div>
 </template>
 
 <script>
+// import { getInfo } from '@/api/user'
 export default {
-  name: 'App'
+  name: 'App',
+  provide(){
+      return{
+          reload:this.reload//刷新
+      }
+  },
+  // created:function(){
+  //   getInfo().then(res => {
+  //       this.online = res.data.online
+  //   }).catch(() => {
+  //       this.$message.error('请求错误！');
+  //   })
+  // },
+  data(){
+    return{
+      isRouterAlive:true,
+      // online:''
+    }
+  },
+  methods:{
+    //页面刷新
+    reload(){
+      this.isRouterAlive = false
+      this.$nextTick(function(){
+        this.isRouterAlive = true
+      })
+    }
+  }
 }
 </script>
 <style>

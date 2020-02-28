@@ -35,34 +35,19 @@
               placeholder="选择日期">
               </el-date-picker>
             </div>
-            <el-input class="top_list" placeholder="请输入微信号" v-model="loan_id">
-                <template slot="prepend">微信号</template>
-            </el-input>
-            <el-input class="top_list" placeholder="请输入昵称" v-model="name">
-                <template slot="prepend">昵称</template>
-            </el-input>
-            <el-input class="top_list" placeholder="请输入备注" v-model="beizhu">
-                <template slot="prepend">备注</template>
-            </el-input>
-            <el-button class="top_list idbtn" type="primary" @click="search1">查询</el-button>
             <div class="clearfix"></div>
           </el-form>
           <!-- 头部菜单end -->
         <!-- 表格 -->
         <div class="table">
             <el-table stripe :data="userList" style="width: 100%">
-              <el-table-column label="好友微信">
-                <template scope="scope">
-                    <div class="wxid"><img :src="scope.row.images1"></div>
-                    <div class="wxid">
-                      <div class="wx_list">{{ scope.row.wx_id1 }}</div>
-                      <div class="wx_list">{{ scope.row.wx_name1 }}</div>
-                    </div>
-                  </template>
+              <el-table-column prop="beizhu" label="内容"></el-table-column>
+              <el-table-column prop="last_time" label="时间"></el-table-column>
+              <el-table-column fixed="right" label="操作" width="100">
+                <template slot-scope="scope">
+                  <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+                </template>
               </el-table-column>
-              <el-table-column prop="beizhu" label="微信备注"></el-table-column>
-              <el-table-column prop="add_time" label="添加时间"></el-table-column>
-              <el-table-column prop="last_time" label="上次聊天"></el-table-column>
             </el-table>
             <!-- 分页 -->
             <el-pagination
@@ -84,15 +69,6 @@
     data() {
       return {
         selectdata1:'',//日期选择
-        department: '',//员工部门
-        options: [
-            { value: '部门一',label: '部门一'}, 
-            {value: '部门二',label: '部门二'}
-        ],
-        loan_id:'',//微信号
-        name:'',//昵称
-        beizhu:'',//备注
-        search:'',//搜索
         total:100,//总条数
         pageSize:50,//每页条数
         currentPage:'',//选择跳页
@@ -106,31 +82,9 @@
         this.handleUserList();
     },
     methods: {
-      //查询
-      search1(){
-          if(this.name =='' & this.mobile=='' & this.loan_id==''){
-              this.$message({message: '请输入搜索条件',type: 'warning'});
-          }else{
-              //表格渲染
-              let json1 = {
-                  loan_id:this.loan_id,
-                  name:this.name,
-                  beizhu:this.beizhu
-              }
-              console.log(json1)
-              // MyLoans(json1).then(res => {
-              //     let result = res.data.lists;
-              //     let mess;
-              //     let self = [];
-              //     for(let key in result){
-              //         mess = result[key];
-              //         self.push(mess);
-              //     }
-              //     this.userList = self;
-              // }).catch(() => {
-              //     this.$message.error('请求错误！');
-              // })
-          }
+      //查看
+      handleClick(row) {
+        console.log(row);
       },
       //每页条数
       handleSizeChange(val) {

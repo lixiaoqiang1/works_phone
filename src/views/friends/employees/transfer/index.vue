@@ -61,8 +61,9 @@
                   </template>
               </el-table-column>
               <el-table-column prop="beizhu" label="微信备注"></el-table-column>
-              <el-table-column prop="add_time" label="添加时间"></el-table-column>
-              <el-table-column prop="last_time" label="上次聊天"></el-table-column>
+              <el-table-column prop="jine" label="红包/转账金额"></el-table-column>
+              <el-table-column prop="shifoujieshou" label="红包/转账是否接收"></el-table-column>
+              <el-table-column prop="add_time" label="转账时间"></el-table-column>
             </el-table>
             <!-- 分页 -->
             <el-pagination

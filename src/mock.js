@@ -25,6 +25,50 @@ Mock.mock('/api/haoyouweixin',{
         },
     ]
 });
+//微信群
+Mock.mock('/api/qun1',{
+    'data|1-1':[
+        {
+            'isid':'1512','images1':'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80','wx_id1':'BigMiao-xzt',
+            'wx_name1':'xx部门xxx群',
+            'images2':'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80',
+            'wx_id2':'微信昵称',
+            'wx_name2':'微信昵称微信昵称',
+            'follow_up':'张三 18628458525',
+            'qun_num':'124',
+            'add_num':'12',
+            'exit_num':'33',
+        },
+        {
+            'isid':'1512','images1':'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80','wx_id1':'BigMiao-xzt',
+            'wx_name1':'xx部门xxx群',
+            'images2':'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80',
+            'wx_id2':'微信昵称',
+            'wx_name2':'微信昵称微信昵称',
+            'follow_up':'张三 18628458525',
+            'qun_num':'124',
+            'add_num':'12',
+            'exit_num':'33',
+        },
+    ]
+});
+//登录日志
+Mock.mock('/api/ruzhi1',{
+    'data|1-1':[
+        {'type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
+        {'type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
+        {'type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
+        {'type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
+        {'type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
+        {'type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
+        {'type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
+        {'type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
+        {'type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
+        {'type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
+        {'type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
+        {'type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
+    ]
+});
 //通话记录
 Mock.mock('/api/tonghuajilu',{
     'data|1-1':[

@@ -20,7 +20,7 @@
                 </el-select>
             </div>
             <div class="top_list list_search">
-                <el-input placeholder="搜索客户备注、电话、员工姓名" v-model="search" class="input-with-select">
+                <el-input placeholder="搜索员工姓名" v-model="search" class="input-with-select">
                     <el-button slot="append" icon="el-icon-search"></el-button>
                 </el-input>
             </div>

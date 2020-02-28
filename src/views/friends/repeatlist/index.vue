@@ -8,6 +8,9 @@
     .top_form .list_search{
         width: 300px;
     }
+    .table{
+        width: 100%;margin-top: 15px;display: inline-block
+    }
     .wxid{
       float: left;
     }
@@ -17,52 +20,53 @@
     .wx_list{
       width: 100%;margin-left: 5px
     }
-    .table{
-        width: 100%;margin-top: 15px;display: inline-block
-    }
     .el-pagination{text-align: center;margin-top: 15px;}
     .through_primary{color:#666}
     .through_danger{color:#f56c6c}
+    .el-pagination{text-align: center;margin-top: 15px;}
 </style>
 <template>
     <div class="callvoice padding10">
         <!-- 头部菜单 -->
           <el-form class="top_form" ref="form">
-            <div class="top_list">
-              <el-date-picker
-              v-model="selectdata1"
-              type="date"
-              placeholder="选择日期">
-              </el-date-picker>
-            </div>
-            <el-input class="top_list" placeholder="请输入微信号" v-model="loan_id">
-                <template slot="prepend">微信号</template>
-            </el-input>
-            <el-input class="top_list" placeholder="请输入昵称" v-model="name">
-                <template slot="prepend">昵称</template>
-            </el-input>
-            <el-input class="top_list" placeholder="请输入备注" v-model="beizhu">
-                <template slot="prepend">备注</template>
-            </el-input>
-            <el-button class="top_list idbtn" type="primary" @click="search1">查询</el-button>
-            <div class="clearfix"></div>
+                  <el-input class="top_list" placeholder="请输入微信号" v-model="loan_id">
+                      <template slot="prepend">微信号</template>
+                  </el-input>
+                  <el-input class="top_list" placeholder="请输入昵称" v-model="name">
+                      <template slot="prepend">昵称</template>
+                  </el-input>
+                  <el-input class="top_list" placeholder="请输入备注" v-model="beizhu">
+                      <template slot="prepend">备注</template>
+                  </el-input>
+                  <el-button class="top_list idbtn" type="primary" @click="search1">查询</el-button>
+              <div class="clearfix"></div>
           </el-form>
           <!-- 头部菜单end -->
+        <!-- 头部菜单end -->
         <!-- 表格 -->
         <div class="table">
             <el-table stripe :data="userList" style="width: 100%">
-              <el-table-column label="好友微信">
-                <template scope="scope">
-                    <div class="wxid"><img :src="scope.row.images1"></div>
-                    <div class="wxid">
-                      <div class="wx_list">{{ scope.row.wx_id1 }}</div>
-                      <div class="wx_list">{{ scope.row.wx_name1 }}</div>
-                    </div>
+                <el-table-column label="好友微信">
+                  <template scope="scope">
+                      <div class="wxid"><img :src="scope.row.images1"></div>
+                      <div class="wxid">
+                        <div class="wx_list">{{ scope.row.wx_id1 }}</div>
+                        <div class="wx_list">{{ scope.row.wx_name1 }}</div>
+                      </div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="beizhu" label="微信备注"></el-table-column>
+                <el-table-column label="跟进员工微信">
+                  <template scope="scope">
+                    <div class="wxid"><img :src="scope.row.images2"></div>
+                      <div class="wxid">
+                        <div class="wx_list">{{ scope.row.wx_id2 }}</div>
+                        <div class="wx_list">{{ scope.row.wx_name2 }}</div>
+                      </div>
                   </template>
-              </el-table-column>
-              <el-table-column prop="beizhu" label="微信备注"></el-table-column>
-              <el-table-column prop="add_time" label="添加时间"></el-table-column>
-              <el-table-column prop="last_time" label="上次聊天"></el-table-column>
+                </el-table-column>
+                <el-table-column prop="follow_up" label="跟进员工"></el-table-column>
+                <el-table-column prop="last_time" label="上次聊天"></el-table-column>
             </el-table>
             <!-- 分页 -->
             <el-pagination
@@ -83,12 +87,6 @@
   export default {
     data() {
       return {
-        selectdata1:'',//日期选择
-        department: '',//员工部门
-        options: [
-            { value: '部门一',label: '部门一'}, 
-            {value: '部门二',label: '部门二'}
-        ],
         loan_id:'',//微信号
         name:'',//昵称
         beizhu:'',//备注
@@ -150,12 +148,12 @@
           }
           //表格渲染
           let _this = this;
-            _this.axios.get('/api/haoyouweixin').then((res)=>{
-                console.log(res.data.data);
-                _this.userList = res.data.data
-            }).catch((err)=>{
-                console.log(err);
-            })
+          _this.axios.get('/api/haoyouweixin').then((res)=>{
+              console.log(res.data.data);
+              _this.userList = res.data.data
+          }).catch((err)=>{
+              console.log(err);
+          })
 
           // userList(json2).then(res => {
           //     let _that = this;
@@ -177,6 +175,5 @@
           // })
       }
     }
-    
   };
 </script>

@@ -8,15 +8,6 @@
     .top_form .list_search{
         width: 300px;
     }
-    .wxid{
-      float: left;
-    }
-    .wxid img{
-      width: 48px;height: 48px;
-    }
-    .wx_list{
-      width: 100%;margin-left: 5px
-    }
     .table{
         width: 100%;margin-top: 15px;display: inline-block
     }
@@ -27,42 +18,55 @@
 <template>
     <div class="callvoice padding10">
         <!-- 头部菜单 -->
-          <el-form class="top_form" ref="form">
-            <div class="top_list">
-              <el-date-picker
-              v-model="selectdata1"
-              type="date"
-              placeholder="选择日期">
-              </el-date-picker>
-            </div>
-            <el-input class="top_list" placeholder="请输入微信号" v-model="loan_id">
-                <template slot="prepend">微信号</template>
-            </el-input>
-            <el-input class="top_list" placeholder="请输入昵称" v-model="name">
-                <template slot="prepend">昵称</template>
-            </el-input>
-            <el-input class="top_list" placeholder="请输入备注" v-model="beizhu">
-                <template slot="prepend">备注</template>
-            </el-input>
-            <el-button class="top_list idbtn" type="primary" @click="search1">查询</el-button>
+            <el-form class="top_form" ref="form">
+                <div class="top_list">
+                    <el-date-picker
+                    v-model="selectdata1"
+                    type="date"
+                    placeholder="选择日期">
+                    </el-date-picker>
+                </div>
+                <div class="top_list">
+                    <el-select v-model="department" placeholder="选择员工部门">
+                        <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                        </el-option>
+                    </el-select>
+                </div>
+                <div class="top_list list_search">
+                    <el-input placeholder="搜索员工姓名" v-model="search" class="input-with-select">
+                        <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
+                    </el-input>
+                </div>
+                <!-- <el-input class="top_list" placeholder="请输入员工姓名" v-model="name">
+                    <template slot="prepend">昵称</template>
+                </el-input>
+                <el-button class="top_list idbtn" type="primary" @click="search">查询</el-button> -->
             <div class="clearfix"></div>
           </el-form>
-          <!-- 头部菜单end -->
+        <!-- 头部菜单end -->
+
         <!-- 表格 -->
         <div class="table">
             <el-table stripe :data="userList" style="width: 100%">
-              <el-table-column label="好友微信">
-                <template scope="scope">
-                    <div class="wxid"><img :src="scope.row.images1"></div>
-                    <div class="wxid">
-                      <div class="wx_list">{{ scope.row.wx_id1 }}</div>
-                      <div class="wx_list">{{ scope.row.wx_name1 }}</div>
-                    </div>
-                  </template>
-              </el-table-column>
-              <el-table-column prop="beizhu" label="微信备注"></el-table-column>
-              <el-table-column prop="add_time" label="添加时间"></el-table-column>
-              <el-table-column prop="last_time" label="上次聊天"></el-table-column>
+                <el-table-column prop="type" label="类型"
+                :filters="[{ text: '呼出', value: '呼出' },{ text: '呼入', value: '呼入' },]"
+                :filter-method="filterTtype"
+                filter-placement="bottom-end"></el-table-column>
+                <el-table-column prop="start_time" label="设备IMEI"></el-table-column>
+                <el-table-column prop="beizhu" label="行为微信" width="180"></el-table-column>
+                <el-table-column prop="isname" label="员工姓名"></el-table-column>
+                <el-table-column prop="isphone" label="所属部门"></el-table-column>
+                <el-table-column prop="length_time" label="敏感内容"></el-table-column>
+                <el-table-column prop="isdate" label="时间" width="180"></el-table-column>
+                <el-table-column label="操作">
+                    <template slot-scope="scope">
+                        <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+                    </template>
+                </el-table-column>
             </el-table>
             <!-- 分页 -->
             <el-pagination
@@ -85,14 +89,14 @@
       return {
         selectdata1:'',//日期选择
         department: '',//员工部门
-        options: [
-            { value: '部门一',label: '部门一'}, 
-            {value: '部门二',label: '部门二'}
-        ],
         loan_id:'',//微信号
         name:'',//昵称
         beizhu:'',//备注
         search:'',//搜索
+        options: [
+            { value: '部门一',label: '部门一'}, 
+            {value: '部门二',label: '部门二'}
+        ],
         total:100,//总条数
         pageSize:50,//每页条数
         currentPage:'',//选择跳页
@@ -100,12 +104,28 @@
         userList: []//table数据
       };
     },
-    inject:['reload'],//刷新当前页
     created: function () {
         //表格渲染
         this.handleUserList();
     },
     methods: {
+        //查看
+        handleClick(row) {
+            console.log(row);
+        },
+        //表导航筛选
+        //通话类型
+        filterTtype(value, row) {
+            return row.type === value;
+        },
+        //角色
+        filterTag(value, row) {
+            return row.role === value;
+        },
+        //是否接通
+        filterjt(value, row) {
+            return row.through === value;
+        },
       //查询
       search1(){
           if(this.name =='' & this.mobile=='' & this.loan_id==''){
@@ -142,6 +162,7 @@
           this.currentPage = val;
           this.handleUserList();
       },
+      
       handleUserList() {
           //表格渲染
           let json2 = {
@@ -149,8 +170,8 @@
               page:this.currentPage//选择跳页
           }
           //表格渲染
-          let _this = this;
-            _this.axios.get('/api/haoyouweixin').then((res)=>{
+            let _this = this;
+            _this.axios.get('/api/tonghua').then((res)=>{
                 console.log(res.data.data);
                 _this.userList = res.data.data
             }).catch((err)=>{
@@ -177,6 +198,5 @@
           // })
       }
     }
-    
   };
 </script>
