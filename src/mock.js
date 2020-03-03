@@ -28,7 +28,7 @@ Mock.mock('/api/haoyouweixin',{
 //微信群
 Mock.mock('/api/qun1',{
     'data|1-1':[
-        {
+        {   'id':12,
             'isid':'1512','images1':'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80','wx_id1':'BigMiao-xzt',
             'wx_name1':'xx部门xxx群',
             'images2':'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80',
@@ -39,7 +39,7 @@ Mock.mock('/api/qun1',{
             'add_num':'12',
             'exit_num':'33',
         },
-        {
+        {   'id':16,
             'isid':'1512','images1':'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80','wx_id1':'BigMiao-xzt',
             'wx_name1':'xx部门xxx群',
             'images2':'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80',

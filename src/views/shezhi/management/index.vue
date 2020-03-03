@@ -27,55 +27,41 @@
 <template>
     <div class="callvoice padding10">
         <!-- 头部菜单 -->
-          <el-form class="top_form" ref="form">
-            <div class="top_list">
-              <el-date-picker
-              v-model="selectdata1"
-              type="date"
-              placeholder="选择日期">
-              </el-date-picker>
-            </div>
-            <el-input class="top_list" placeholder="请输入微信号" v-model="loan_id">
-                <template slot="prepend">微信号</template>
-            </el-input>
-            <el-input class="top_list" placeholder="请输入昵称" v-model="name">
-                <template slot="prepend">昵称</template>
-            </el-input>
-            <el-input class="top_list" placeholder="请输入备注" v-model="beizhu">
-                <template slot="prepend">备注</template>
-            </el-input>
-            <el-button class="top_list idbtn" type="primary" @click="search1">查询</el-button>
-            <div class="clearfix"></div>
-          </el-form>
-          <!-- 头部菜单end -->
+        <el-form class="top_form" ref="form">
+          <el-input class="top_list" placeholder="搜索员工姓名" v-model="name">
+              <template slot="prepend">姓名</template>
+          </el-input>
+          <el-input class="top_list" placeholder="搜索员工账号" v-model="loan_id">
+              <template slot="prepend">账号</template>
+          </el-input>
+          <el-input class="top_list" placeholder="搜索员工微信号" v-model="beizhu">
+              <template slot="prepend">微信号</template>
+          </el-input>
+          <el-input class="top_list" placeholder="搜索员工IMEI" v-model="IMEI">
+              <template slot="prepend">IMEI</template>
+          </el-input>
+          <el-button class="top_list idbtn" type="primary" @click="search1">查询</el-button>
+          <el-button type="primary" round @click="shebeibtn('aaa')">设备绑定日志</el-button>
+          <div class="clearfix"></div>
+        </el-form>
+        <!-- 头部菜单end -->
         <!-- 表格 -->
         <div class="table">
             <el-table stripe :data="userList" style="width: 100%">
-              <el-table-column label="微信群">
-                <template scope="scope">
-                  <div class="bule_color">
-                    <div class="wxid"><img :src="scope.row.images1"></div>
-                    <div class="wxid">
-                      <div class="wx_list">{{ scope.row.wx_name1 }}</div>
-                    </div>
-                  </div>
+                <el-table-column prop="type1" label="设备IMEI"></el-table-column>
+                <el-table-column prop="imei" label="是否绑定员工"></el-table-column>
+                <el-table-column prop="isip" label="员工姓名"  ></el-table-column>
+                <el-table-column prop="weizhi" label="员工账号"></el-table-column>
+                <el-table-column prop="times1" label="员工部门"></el-table-column>
+                <el-table-column prop="yuangong1" label="当前登录微信"></el-table-column>
+                <el-table-column prop="yuangong2" label="机型"></el-table-column>
+                <el-table-column label="操作">
+                  <template slot-scope="scope">
+                    <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">解绑</el-button>
+                    <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">恢复出产设置</el-button>
+                    <!-- <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">绑定员工</el-button> -->
                   </template>
-              </el-table-column>
-              <el-table-column label="跟进员工微信">
-                <template scope="scope">
-                  <div class="bule_color">
-                    <div class="wxid"><img :src="scope.row.images2"></div>
-                    <div class="wxid">
-                      <div class="wx_list">{{ scope.row.wx_id2 }}</div>
-                      <div class="wx_list">{{ scope.row.wx_name2 }}</div>
-                    </div>
-                  </div>
-                </template>
-              </el-table-column>
-              <el-table-column prop="follow_up" label="跟进员工"  ></el-table-column>
-              <el-table-column prop="qun_num" label="群成员数"></el-table-column>
-              <el-table-column prop="add_num" label="新增好友"></el-table-column>
-              <el-table-column prop="exit_num" label="退群好友"></el-table-column>
+                </el-table-column>
             </el-table>
             <!-- 分页 -->
             <el-pagination
@@ -93,15 +79,15 @@
     </div>
 </template>
 <script>
+import pageNation from '@/components/pageNation/index'     // 引入分页
   export default {
     data() {
       return {
-        selectdata1:'',//日期选择
-        department: '',//员工部门
-        options: [{ value: '部门一',label: '部门一'}, {value: '部门二',label: '部门二'}],
         loan_id:'',//微信号
         name:'',//昵称
         beizhu:'',//备注
+        IMEI:'',
+        search:'',//搜索
         search:'',//搜索
         total:100,//总条数
         pageSize:50,//每页条数
@@ -110,22 +96,25 @@
         userList: []//table数据
       };
     },
-    inject:['reload'],//刷新当前页
     created: function () {
         //表格渲染
         this.handleUserList();
     },
+    components: {
+      pageNation
+    },
     methods: {
       //查询
       search1(){
-          if(this.name =='' & this.mobile=='' & this.loan_id==''){
+          if(this.name =='' & this.mobile=='' & this.loan_id=='' & this.IMEI==''){
               this.$message({message: '请输入搜索条件',type: 'warning'});
           }else{
               //表格渲染
               let json1 = {
                   loan_id:this.loan_id,
                   name:this.name,
-                  beizhu:this.beizhu
+                  beizhu:this.beizhu,
+                  IMEI:''
               }
               console.log(json1)
               // MyLoans(json1).then(res => {
@@ -142,7 +131,11 @@
               // })
           }
       },
-      //每页条数
+      shebeibtn(aa){
+        console.log(aa);
+        this.$router.push({ path:'bindinglog', query: { id: 121 }});
+      },
+        //每页条数
       handleSizeChange(val) {
           this.pageSize = val;
           this.handleUserList();
@@ -160,7 +153,7 @@
           }
           //表格渲染
             let _this = this;
-            _this.axios.get('/api/qun1').then((res)=>{
+            _this.axios.get('/api/ruzhi1').then((res)=>{
                 console.log(res.data.data);
                 _this.userList = res.data.data
             }).catch((err)=>{

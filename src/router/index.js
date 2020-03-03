@@ -139,20 +139,19 @@ export const constantRoutes = [
       {
         path: 'wechatgroup',
         component: () => import('@/views/friends/wechatgroup/index'),
-        meta: { title: '微信群列表', icon: 'example' },
-        children: [
-          {
-            path: 'hyperlinks',
-            component: () => import('@/views/friends/wechatgroup/hyperlinks'),
-            meta: { title: '群超链接', icon: 'example' }
-          },
-          {
-            path: 'hyperlinks2',
-            component: () => import('@/views/friends/wechatgroup/hyperlinks2'),
-            meta: { title: '员工超链接', icon: 'example' }
-          }
-        ]
-      }
+        meta: { title: '微信群列表', icon: 'example' }
+      },
+      {
+        path: 'hyperlinks',
+        component: () => import('@/views/friends/hyperlinks/index'),
+        meta: { title: '群超链接', icon: 'example' }
+      },
+      {
+        path: 'hyperlinks2',
+        component: () => import('@/views/friends/hyperlinks2/index'),
+        meta: { title: '群超链接', icon: 'example' }
+      },
+
     ]
   },
   {
@@ -261,45 +260,65 @@ export const constantRoutes = [
       icon: 'wecheat'
     },
     children: [
+      // {
+      //   path: 'menu1',
+      //   component: () => import('@/views/shezhi/menu1/index'), // Parent router-view
+      //   name: 'Menu1',
+      //   meta: { title: '员工微信列表', icon: 'example' },
+      //   children: [
+      //     {
+      //       path: 'menu1-1',
+      //       component: () => import('@/views/shezhi/menu1/menu1-1'),
+      //       name: 'Menu1-1',
+      //       meta: { title: 'Menu1-1', icon: 'example' }
+      //     },
+      //     {
+      //       path: 'menu1-2',
+      //       component: () => import('@/views/shezhi/menu1/menu1-2'),
+      //       name: 'Menu1-2',
+      //       meta: { title: 'Menu1-2', icon: 'example' },
+      //       children: [
+      //         {
+      //           path: 'menu1-2-1',
+      //           component: () => import('@/views/shezhi/menu1/menu1-2/menu1-2-1'),
+      //           name: 'Menu1-2-1',
+      //           meta: { title: 'Menu1-2-1', icon: 'example' }
+      //         },
+      //         {
+      //           path: 'menu1-2-2',
+      //           component: () => import('@/views/shezhi/menu1/menu1-2/menu1-2-2'),
+      //           name: 'Menu1-2-2',
+      //           meta: { title: 'Menu1-2-2', icon: 'example' }
+      //         }
+      //       ]
+      //     }
+      //   ]
+      // },
       {
-        path: 'menu1',
-        component: () => import('@/views/shezhi/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: '员工微信列表', icon: 'example' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/shezhi/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1', icon: 'example' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/shezhi/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2', icon: 'example' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/shezhi/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1', icon: 'example' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/shezhi/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2', icon: 'example' }
-              }
-            ]
-          }
-        ]
+        path: 'management',
+        component: () => import('@/views/shezhi/management/index'),
+        meta: { title: '设备管理', icon: 'example' }
       },
       {
-        path: 'friends_list',
-        component: () => import('@/views/shezhi/friends_list/index'),
-        meta: { title: '好友列表', icon: 'example' }
-      }
+        path: 'bindinglog',
+        component: () => import('@/views/shezhi/bindinglog/index'),
+        // meta: { title: '设备绑定日志', icon: 'example' }
+      },
+      {
+        path: 'personal',
+        component: () => import('@/views/shezhi/personal/index'),
+        // meta: { title: '个人设置', icon: 'example' }
+      },
+      {
+        path: 'jurisdiction',
+        component: () => import('@/views/shezhi/permissions/jurisdiction/index'),
+        meta: { title: '权限设置', icon: 'example' }
+      },
+      {
+        path: 'configuration',
+        component: () => import('@/views/shezhi/permissions/configuration/index'),
+        meta: { title: '权限配置', icon: 'example' }
+      },
     ]
   },
 

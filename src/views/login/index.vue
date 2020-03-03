@@ -1,6 +1,8 @@
 <style scoped>
 .login-container{
-  width: 100%;height: 100%;display: inline-block;background-color: #3764e4;
+  width: 100%;height:inherit;display: inline-block;background-color: #3764e4;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .form_o{
   position: fixed; left: 0;right: 0;top: 0;bottom: 0;margin: auto;background: white;border-radius: 12px;
@@ -43,7 +45,7 @@
 }
 </style>
 <template>
-  <div class="login-container">
+  <div class="login-container" :style="setBackground">
     <el-row class="form_o">
       <el-col class="form_o_left" :span="10">
         <img class="pic1" src="@/assets/images/login2.png">
@@ -128,6 +130,10 @@ export default {
       }
     }
     return {
+      setBackground: {
+          backgroundImage: "url(" + require("@/assets/images/login_bj.png") + ")",
+          
+       },
       loginForm: {
         username: '',
         code:'',
