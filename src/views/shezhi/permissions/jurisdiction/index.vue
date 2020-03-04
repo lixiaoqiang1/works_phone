@@ -85,10 +85,11 @@
           //     this.$message.error('请求错误！');
           // })
       },
-      handleClick1(){
-        this.$router.push({path:'configuration',query:{aa:'121'}}); 
+      handleClick1(row){
+        console.log(row.id)
+        this.$router.push({path:'configuration',query:{id:row.id}}); 
       },
-
+     
       //添加角色
       btnadd(){
         this.$prompt('角色名称', '添加角色', {

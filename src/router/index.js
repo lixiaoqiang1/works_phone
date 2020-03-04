@@ -238,18 +238,7 @@ export const constantRoutes = [
     ]
   },
 
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: '数据统计', icon: 'form' }
-      }
-    ]
-  },
+
   {
     path: '/shezhi',
     component: Layout,
@@ -300,6 +289,16 @@ export const constantRoutes = [
         meta: { title: '设备管理', icon: 'example' }
       },
       {
+        path: 'weifenpei',
+        component: () => import('@/views/shezhi/staff/weifenpei/index'),
+        meta: { title: '员工管理', icon: 'example' }
+      },
+      {
+        path: 'lizhi',
+        component: () => import('@/views/shezhi/staff/lizhi/index'),
+        meta: { title: '离职员工', icon: 'example' }
+      },
+      {
         path: 'bindinglog',
         component: () => import('@/views/shezhi/bindinglog/index'),
         // meta: { title: '设备绑定日志', icon: 'example' }
@@ -317,7 +316,7 @@ export const constantRoutes = [
       {
         path: 'configuration',
         component: () => import('@/views/shezhi/permissions/configuration/index'),
-        meta: { title: '权限配置', icon: 'example' }
+        // meta: { title: '权限配置', icon: 'example' }
       },
     ]
   },

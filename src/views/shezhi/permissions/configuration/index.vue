@@ -18,6 +18,7 @@
 <template>
     <div class="callvoice padding10">
         <div class="list">
+            <p>{{id1}}</p>
             <h4>PC端管理后台全局设置</h4>
             <div class="item-list">
                 <label>可视数据范围：</label>
@@ -74,6 +75,8 @@
 export default {
     data(){
         return{
+            id1:this.$route.query.id,//上级传参id
+
             radio1: '1',
             radio2: '1',
 
@@ -100,7 +103,15 @@ export default {
             isIndeterminate4: true,
         }
     },
+    created: function () {
+        //表格渲染
+        this.handleUserList();
+    },
     methods: {
+        //渲染
+        handleUserList(){
+            console.log('axios')
+        },
       //全选1
       handleCheckAllChange1(val) {
         this.checkedCities1 = val ? this.cities1 : [];

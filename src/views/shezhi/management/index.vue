@@ -55,12 +55,16 @@
                 <el-table-column prop="times1" label="员工部门"></el-table-column>
                 <el-table-column prop="yuangong1" label="当前登录微信"></el-table-column>
                 <el-table-column prop="yuangong2" label="机型"></el-table-column>
-                <el-table-column label="操作">
-                  <template slot-scope="scope">
-                    <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">解绑</el-button>
-                    <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">恢复出产设置</el-button>
-                    <!-- <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">绑定员工</el-button> -->
-                  </template>
+                <el-table-column label="操作" width="200px">
+                    <template slot-scope="scope">
+                        <div v-if="scope.row.caozuo == 1">
+                          <el-button size="mini" type="primary" @click="handlebtn1(scope.$index, scope.row)">解绑</el-button>
+                          <el-button size="mini" type="primary" @click="handlebtn2(scope.$index, scope.row)">恢复出产设置</el-button>
+                        </div>
+                        <div v-if="scope.row.caozuo == 2">
+                          <el-button size="mini" type="primary" @click="handlebtn3(scope.$index, scope.row)">绑定员工</el-button>
+                        </div>
+                    </template>
                 </el-table-column>
             </el-table>
             <!-- 分页 -->

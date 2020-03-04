@@ -55,18 +55,10 @@ Mock.mock('/api/qun1',{
 //登录日志
 Mock.mock('/api/ruzhi1',{
     'data|1-1':[
-        {'type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
-        {'type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
-        {'type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
-        {'type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
-        {'type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
-        {'type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
-        {'type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
-        {'type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
-        {'type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
-        {'type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
-        {'type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
-        {'type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
+        {'id':'12','caozuo':'1','type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
+        {'id':'22','caozuo':'2','type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
+        {'id':'43','caozuo':'1','type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
+        {'id':'41','caozuo':'2','type1':'33','imei':'33','isip':'33','weizhi':'33','times1':'33','yuangong':'33', },
     ]
 });
 //通话记录

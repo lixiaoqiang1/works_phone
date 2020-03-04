@@ -35,6 +35,33 @@
     .head span{
       line-height: 60px; 
     }
+    .elcol-text{
+      padding: 15px;
+    }
+    .ul-text .text-left{
+      width: 100%;display: block;position: relative;margin-bottom: 35px;
+    }
+    .ul-text .text-left img{
+      width: 100%;
+    }
+    .text-left .r-head{
+      width: 60px;position: absolute;left: 0;top: 0;border-radius: 4px;overflow: hidden;
+    }
+    .text-left .text1{
+      padding-left: 80px;
+    }
+    .text-left .text1 .text-item1{
+      font-size: 14px;color: #666;margin-bottom: 10px;
+    }
+    /* .text-left .text1 .text-item2{
+      padding: 10px;
+    } */
+    .text-left .text1 .text-item2 a{
+      font-size: 14px;background: #eee;display: inline-block;padding: 10px;border-radius: 4px;
+    }
+    .text-left .text1 img{
+      max-height: 150px;width: auto;;
+    }
 </style>
 <template>
     <div class="callvoice padding10">
@@ -68,12 +95,47 @@
                 </li>
               </ul>
             </el-col>
-            <el-col :span="18">
-              12321
-              <ul>
-                <li>
-                  <div></div>
-                  <div></div>
+            <el-col class="elcol-text" :span="18">
+              <ul class="ul-text">
+                <li class="text-left">
+                  <div class="r-head">
+                    <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80">
+                  </div>
+                  <div class="text1">
+                    <p class="text-item1"><a>向梓曈资质不符</a><span>2019/12/04  12:50</span></p>
+                    <!-- <div class="text-item2"><span>他找了好几家都给拒了，平安普惠凤金大数据他找了好几家都给拒了，平安普惠凤金大数据他找了好几家都给拒了，平安普惠凤金大数据他找了好几家都给拒了，平安普惠凤金大数据他找了好几家都给拒了，平安普惠凤金大数据他找了好几家都给拒了，平安普惠凤金大数据他找了好几家都给拒了，平安普惠凤金大数据他找了好几家都给拒了，平安普惠凤金大数据评分过低</span></div> -->
+                    <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80">
+                  </div>
+                </li>
+                <li class="text-left">
+                  <div class="r-head">
+                    <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80">
+                  </div>
+                  <div class="text1">
+                    <p class="text-item1"><a>向梓曈资质不符</a><span>2019/12/04  12:50</span></p>
+                    <div class="text-item2"><a>他找了好几家都给拒了，平安普惠凤金大数据他找了好几家都给拒了，平安普惠凤金大数据他找了好几家都给拒了，平安普惠凤金大数据他找了好几家都给拒了，平安普惠凤金大数据他找了好几家都给拒了，平安普惠凤金大数据他找了好几家都给拒了，平安普惠凤金大数据他找了好几家都给拒了，平安普惠凤金大数据他找了好几家都给拒了，平安普惠凤金大数据评分过低</a></div>
+                    <!-- <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80"> -->
+                  </div>
+                </li>
+                <li class="text-left">
+                  <div class="r-head">
+                    <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80">
+                  </div>
+                  <div class="text1">
+                    <p class="text-item1"><a>向梓曈资质不符</a><span>2019/12/04  12:50</span></p>
+                    <div class="text-item2"><a>他找了好几家都给拒</a></div>
+                    <!-- <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80"> -->
+                  </div>
+                </li>
+                <li class="text-left">
+                  <div class="r-head">
+                    <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80">
+                  </div>
+                  <div class="text1">
+                    <p class="text-item1"><a>向梓曈资质不符</a><span>2019/12/04  12:50</span></p>
+                    <div class="text-item2"><a>他找了好几家都给拒</a></div>
+                    <!-- <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80"> -->
+                  </div>
                 </li>
               </ul>
             </el-col>
