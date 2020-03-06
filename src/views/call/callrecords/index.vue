@@ -195,7 +195,7 @@ import breathebox from '@/views/call/callrecords/breathe_box/index'     // ä¸ªäº
 </script>
 <style >
     .top_form .top_list{
-        width: 220px;float: left;margin-right: 15px;
+        width: 220px;float: left;margin: 0 15px 10px 0;
     }
     .top_form .list_search{
         width: 300px;

@@ -135,11 +135,11 @@ export const constantRoutes = [
         component: () => import('@/views/call/callvoice/index'),
         meta: { title: '通话录音', icon: 'example' }
       },
-      {
-        path: 'mobile_sms',
-        component: () => import('@/views/call/mobile_sms/index'),
-        meta: { title: '手机短信', icon: 'example' }
-      },
+      // {
+      //   path: 'mobile_sms',
+      //   component: () => import('@/views/call/mobile_sms/index'),
+      //   meta: { title: '手机短信', icon: 'example' }
+      // },
     ]
   },
   // {
@@ -185,11 +185,11 @@ export const constantRoutes = [
         component: () => import('@/views/shezhi/staff/weifenpei/index'),
         meta: { title: '员工管理', icon: 'example' }
       },
-      {
-        path: 'lizhi',
-        component: () => import('@/views/shezhi/staff/lizhi/index'),
-        meta: { title: '离职员工', icon: 'example' }
-      },
+      // {
+      //   path: 'lizhi',
+      //   component: () => import('@/views/shezhi/staff/lizhi/index'),
+      //   meta: { title: '离职员工', icon: 'example' }
+      // },
       {
         path: 'bindinglog',
         component: () => import('@/views/shezhi/bindinglog/index'),

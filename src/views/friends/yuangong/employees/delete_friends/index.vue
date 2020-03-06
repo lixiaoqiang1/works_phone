@@ -1,6 +1,6 @@
 <style scoped>
     .top_form .top_list{
-        width: 220px;float: left;margin-right: 15px;
+        width: 220px;float: left;margin: 0 15px 10px 0;
     }
     .top_form .idbtn{
         width: 100px;
@@ -29,11 +29,9 @@
         <!-- 头部菜单 -->
           <el-form class="top_form" ref="form">
             <div class="top_list">
-              <el-date-picker
-              v-model="selectdata1"
-              type="date"
-              placeholder="选择日期">
-              </el-date-picker>
+              <!-- 时间查询 -->
+              <datapicker2 v-on:dateValue="dateValue"></datapicker2>
+              <!-- 时间查询 -->
             </div>
             <el-input class="top_list" placeholder="请输入微信号" v-model="loan_id">
                 <template slot="prepend">微信号</template>
@@ -79,10 +77,11 @@
     </div>
 </template>
 <script>
+import datapicker2 from '@/components/Datapicker2'
   export default {
+    components: {datapicker2},
     data() {
       return {
-        selectdata1:'',//日期选择
         department: '',//员工部门
         options: [
             { value: '部门一',label: '部门一'}, 
@@ -105,6 +104,10 @@
         this.handleUserList();
     },
     methods: {
+      //日期选择
+      dateValue: function (dateValue) {
+        console.log(dateValue);
+      },
       //查询
       search1(){
           if(this.name =='' & this.mobile=='' & this.loan_id==''){

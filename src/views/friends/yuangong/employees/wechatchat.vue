@@ -1,6 +1,6 @@
 <style scoped>
     .top_form .top_list{
-        width: 220px;float: left;margin-right: 15px;
+        width: 220px;float: left;margin: 0 15px 10px 0;
     }
     .top_form .datefirst{
       width: 350px
@@ -17,11 +17,12 @@
     .coment h5{
       text-align: center;color: blue;padding: 0;font-size: 16px;line-height: 50px;
     }
-    .coment .col_left{
-      border-right: 1px #ddd solid;
+    
+    .coment .el-row{
+        position: relative;padding-left: 220px;
     }
-    .head{
-      border-top: 2px blue solid;
+    .coment .col_left{
+      border-right: 1px #ddd solid;position: absolute;left: 0;width: 200px;
     }
     .head li{
       width: 100%;padding: 10px;cursor: pointer;
@@ -33,7 +34,7 @@
       float: left;background: #dddddd;width: 60px;height: 60px;border:1px #ddd solid;margin-right: 10px;border-radius: 4px;
     }
     .head span{
-      line-height: 60px; 
+      line-height: 60px; font-size: 14px;;
     }
     .elcol-text{
       padding: 15px;
@@ -87,13 +88,31 @@
         <div class="coment">
           <el-row>
             <el-col class="col_left" :span="5">
-              <h5>群成员列表</h5>
+                <el-tabs v-model="activeName" @tab-click="handleClick">
+                    <el-tab-pane label="好友聊天" name="first">
+                        <ul class="head">
+                            <li v-for="(arr,index) in array" :key="index" :data-id='arr.id' @click="btntab(arr.id)">
+                            <div class="pic"></div>
+                            <span>{{arr.text}}</span>
+                            </li>
+                        </ul>
+                    </el-tab-pane>
+                    <el-tab-pane label="微信群聊" name="second">
+                        <ul class="head">
+                            <li v-for="(arr,index) in array2" :key="index" :data-id='arr.id' @click="btntab(arr.id)">
+                            <div class="pic"></div>
+                            <span>{{arr.text}}222</span>
+                            </li>
+                        </ul>
+                    </el-tab-pane>
+                </el-tabs>
+              <!-- <h5>好友聊天</h5>
               <ul class="head">
                 <li v-for="(arr,index) in array" :key="index" :data-id='arr.id' @click="btntab(arr.id)">
                   <div class="pic"></div>
                   <span>{{arr.text}}</span>
                 </li>
-              </ul>
+              </ul> -->
             </el-col>
             <el-col class="elcol-text" :span="19">
               <ul class="ul-text">
@@ -153,11 +172,17 @@ import datapicker from '@/components/Datapicker'
         name:'',//昵称
         beizhu:'',//备注
         search:'',//搜索
+        activeName:'first',
         array:[
-          {id:12,text:'张三张三张三',},
-          {id:42,text:'李四李四李四',},
+          {id:12,text:'张三11',},
+          {id:42,text:'李四11',},
           {id:66,text:'王五王五王五',},
-        ]
+        ],
+        array2:[
+          {id:42,text:'张三22',},
+          {id:44,text:'李四22',},
+          {id:52,text:'王五22',},
+        ],
       };
     },
     components: {datapicker },
@@ -181,6 +206,10 @@ import datapicker from '@/components/Datapicker'
       dateValue: function (dateValue) {
         console.log(dateValue);
         console.log('1212')
+      },
+      //导航
+      handleClick(tab, event) {
+        console.log(tab, event);
       },
       //获取值
       btntab(e){
