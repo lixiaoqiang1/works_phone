@@ -61,7 +61,7 @@ export const constantRoutes = [
   {
     path: '/friends',
     component: Layout,
-    redirect: '/friends/employees',
+    redirect: '/friends/yuangong',
     name: 'Nested',
     meta: {
       title: '微信管理',
@@ -69,88 +69,41 @@ export const constantRoutes = [
     },
     children: [
       {
-        path: 'employees',
-        component: () => import('@/views/friends/employees/index'), // Parent router-view
-        name: 'employees',
-        meta: { title: '员工微信列表', icon: 'example' },
-        children: [
-          {
-            path: 'wx_friends',
-            component: () => import('@/views/friends/employees/wx_friends'),
-            name: 'wx_friends',
-            meta: { title: '微信聊天', icon: 'example' },
-            children: [
-              {
-                path: 'thelog',
-                component: () => import('@/views/friends/employees/wx_friends/thelog'),
-                name: 'thelog',
-                meta: { title: '登录日志', icon: 'example' }
-              },
-              {
-                path: 'group_chat',
-                component: () => import('@/views/friends/employees/wx_friends/group_chat'),
-                name: 'group_chat',
-                meta: { title: '微信群聊', icon: 'example' }
-              }
-            ]
-          },
-          {
-            path: 'newfriends',
-            component: () => import('@/views/friends/employees/newfriends'),
-            name: 'newfriends',
-            meta: { title: '新加好友', icon: 'example' }
-          },
-          {
-            path: 'delete_friends',
-            component: () => import('@/views/friends/employees/delete_friends'),
-            name: 'delete_friends',
-            meta: { title: '删除好友', icon: 'example' }
-          },
-          {
-            path: 'shielding_friends',
-            component: () => import('@/views/friends/employees/shielding_friends'),
-            name: 'shielding_friends',
-            meta: { title: '拉黑好友', icon: 'example' }
-          },
-          {
-            path: 'transfer',
-            component: () => import('@/views/friends/employees/transfer'),
-            name: 'transfer',
-            meta: { title: '红包转账', icon: 'example' }
-          },
-          {
-            path: 'sensitive_word',
-            component: () => import('@/views/friends/employees/sensitive_word'),
-            name: 'sensitive_word',
-            meta: { title: '敏感词', icon: 'example' }
-          },
-        ]
+        path: 'yuangong',
+        component: () => import('@/views/friends/yuangong/index'),
+        meta: { title: '员工微信列表', icon: 'example' }
+      },
+      {
+        path: 'wechatlist2',
+        name: 'wechatlist2',
+        component: () => import('@/views/friends/yuangong/wechatlist2/index'),
+        // meta: { title: '微信聊天', icon: 'example' }
       },
       {
         path: 'friends_list',
         component: () => import('@/views/friends/friends_list/index'),
         meta: { title: '好友列表', icon: 'example' }
       },
-      {
-        path: 'repeatlist',
-        component: () => import('@/views/friends/repeatlist/index'),
-        meta: { title: '重复好友列表', icon: 'example' }
-      },
-      {
-        path: 'wechatgroup',
-        component: () => import('@/views/friends/wechatgroup/index'),
-        meta: { title: '微信群列表', icon: 'example' }
-      },
-      {
-        path: 'hyperlinks',
-        component: () => import('@/views/friends/hyperlinks/index'),
-        meta: { title: '群超链接', icon: 'example' }
-      },
-      {
-        path: 'hyperlinks2',
-        component: () => import('@/views/friends/hyperlinks2/index'),
-        meta: { title: '群超链接', icon: 'example' }
-      },
+      // {
+      //   path: 'repeatlist',
+      //   component: () => import('@/views/friends/repeatlist/index'),
+      //   meta: { title: '重复好友列表', icon: 'example' }
+      // },
+      // {
+      //   path: 'wechatgroup',
+      //   component: () => import('@/views/friends/wechatgroup/index'),
+      //   meta: { title: '微信群列表', icon: 'example' }
+      // },
+      // {
+      //   path: 'hyperlinks',
+      //   component: () => import('@/views/friends/hyperlinks/index'),
+      //   meta: { title: '群超链接', icon: 'example' }
+      // },
+      // {
+      //   path: 'hyperlinks2',
+      //   component: () => import('@/views/friends/hyperlinks2/index'),
+      //   meta: { title: '群超链接', icon: 'example' }
+      // },
 
     ]
   },
@@ -192,51 +145,24 @@ export const constantRoutes = [
   // {
   //   path: '/example',
   //   component: Layout,
-  //   redirect: '/example/table',
+  //   redirect: '/example/sensitive',
   //   name: 'Example',
-  //   meta: { title: '敏感行为管理', icon: 'example' },
+  //   meta: { title: '敏感行为管理', icon: 'table' },
   //   children: [
   //     {
-  //       path: 'table',
+  //       path: 'behavior',
   //       name: 'Table',
-  //       component: () => import('@/views/table/index'),
-  //       meta: { title: '行为详情', icon: 'table' }
+  //       component: () => import('@/views/sensitive/behavior/index'),
+  //       meta: { title: '敏感性为', icon: 'example' }
   //     },
   //     {
-  //       path: 'tree',
-  //       name: 'Tree',
-  //       component: () => import('@/views/tree/index'),
-  //       meta: { title: 'Tree', icon: 'tree' }
-  //     }
+  //       path: 'behavior_shezhi',
+  //       name: 'Table',
+  //       component: () => import('@/views/sensitive/behavior_shezhi/index'),
+  //       meta: { title: '敏感性为设置', icon: 'example' }
+  //     },
   //   ]
   // },
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/sensitive',
-    name: 'Example',
-    meta: { title: '敏感行为管理', icon: 'table' },
-    children: [
-      {
-        path: 'behavior',
-        name: 'Table',
-        component: () => import('@/views/sensitive/behavior/index'),
-        meta: { title: '敏感性为', icon: 'example' }
-      },
-      {
-        path: 'behavior_shezhi',
-        name: 'Table',
-        component: () => import('@/views/sensitive/behavior_shezhi/index'),
-        meta: { title: '敏感性为设置', icon: 'example' }
-      },
-      // {
-      //   path: 'tree',
-      //   name: 'Tree',
-      //   component: () => import('@/views/tree/index'),
-      //   meta: { title: 'Tree', icon: 'tree' }
-      // }
-    ]
-  },
 
 
   {
@@ -249,40 +175,6 @@ export const constantRoutes = [
       icon: 'wecheat'
     },
     children: [
-      // {
-      //   path: 'menu1',
-      //   component: () => import('@/views/shezhi/menu1/index'), // Parent router-view
-      //   name: 'Menu1',
-      //   meta: { title: '员工微信列表', icon: 'example' },
-      //   children: [
-      //     {
-      //       path: 'menu1-1',
-      //       component: () => import('@/views/shezhi/menu1/menu1-1'),
-      //       name: 'Menu1-1',
-      //       meta: { title: 'Menu1-1', icon: 'example' }
-      //     },
-      //     {
-      //       path: 'menu1-2',
-      //       component: () => import('@/views/shezhi/menu1/menu1-2'),
-      //       name: 'Menu1-2',
-      //       meta: { title: 'Menu1-2', icon: 'example' },
-      //       children: [
-      //         {
-      //           path: 'menu1-2-1',
-      //           component: () => import('@/views/shezhi/menu1/menu1-2/menu1-2-1'),
-      //           name: 'Menu1-2-1',
-      //           meta: { title: 'Menu1-2-1', icon: 'example' }
-      //         },
-      //         {
-      //           path: 'menu1-2-2',
-      //           component: () => import('@/views/shezhi/menu1/menu1-2/menu1-2-2'),
-      //           name: 'Menu1-2-2',
-      //           meta: { title: 'Menu1-2-2', icon: 'example' }
-      //         }
-      //       ]
-      //     }
-      //   ]
-      // },
       {
         path: 'management',
         component: () => import('@/views/shezhi/management/index'),

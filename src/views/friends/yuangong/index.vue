@@ -8,12 +8,6 @@
     .top_form .list_search{
         width: 300px;
     }
-    .table{
-        width: 100%;margin-top: 15px;display: inline-block
-    }
-    .table .handleEdit{
-      color: #409EFF;
-    }
     .wxid{
       float: left;
     }
@@ -23,54 +17,67 @@
     .wx_list{
       width: 100%;margin-left: 5px
     }
+    .table{
+        width: 100%;margin-top: 15px;display: inline-block
+    }
+    .table .handleEdit{
+      color: #409EFF;
+    }
     .el-pagination{text-align: center;margin-top: 15px;}
     .through_primary{color:#666}
     .through_danger{color:#f56c6c}
-    .el-pagination{text-align: center;margin-top: 15px;}
 </style>
 <template>
     <div class="callvoice padding10">
         <!-- 头部菜单 -->
           <el-form class="top_form" ref="form">
-                  <el-input class="top_list" placeholder="请输入微信号" v-model="loan_id">
-                      <template slot="prepend">微信号</template>
-                  </el-input>
-                  <el-input class="top_list" placeholder="请输入昵称" v-model="name">
-                      <template slot="prepend">昵称</template>
-                  </el-input>
-                  <el-input class="top_list" placeholder="请输入备注" v-model="beizhu">
-                      <template slot="prepend">备注</template>
-                  </el-input>
-                  <el-button class="top_list idbtn" type="primary" @click="search1">查询</el-button>
-              <div class="clearfix"></div>
+            <div class="top_list">
+                <el-select v-model="department" placeholder="选择部门">
+                    <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                    </el-option>
+                </el-select>
+            </div>
+            <el-input class="top_list" placeholder="请输入微信号" v-model="loan_id">
+                <template slot="prepend">微信号</template>
+            </el-input>
+            <el-input class="top_list" placeholder="请输入昵称" v-model="name">
+                <template slot="prepend">昵称</template>
+            </el-input>
+            <el-input class="top_list" placeholder="请输入备注" v-model="beizhu">
+                <template slot="prepend">备注</template>
+            </el-input>
+            <el-button class="top_list idbtn" type="primary" @click="search1">查询</el-button>
+            <div class="clearfix"></div>
           </el-form>
-        <!-- 头部菜单end -->
+          <!-- 头部菜单end -->
         <!-- 表格 -->
         <div class="table">
             <el-table stripe :data="userList" style="width: 100%">
-                <el-table-column label="好友微信">
-                  <template scope="scope">
-                      <div class="wxid"><img :src="scope.row.images1"></div>
-                      <div class="wxid">
-                        <div class="wx_list">{{ scope.row.wx_id1 }}</div>
-                        <div class="wx_list">{{ scope.row.wx_name1 }}</div>
-                      </div>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="beizhu" label="微信备注"></el-table-column>
-                <el-table-column label="跟进员工微信">
-                  <template scope="scope">
-                    <a class="handleEdit" @click="handleEdit(scope.$index, scope.row)">
-                      <div class="wxid"><img :src="scope.row.images2"></div>
-                        <div class="wxid">
-                          <div class="wx_list">{{ scope.row.wx_id2 }}</div>
-                          <div class="wx_list">{{ scope.row.wx_name2 }}</div>
-                        </div>
-                    </a>
+              <el-table-column label="员工微信" width="200px">
+                <template scope="scope">
+                  <a class="handleEdit" @click="handleEdit(scope.$index, scope.row)">
+                    <div class="wxid"><img :src="scope.row.images1"></div>
+                    <div class="wxid">
+                      <div class="wx_list">{{ scope.row.wx_id1 }}</div>
+                      <div class="wx_list">{{ scope.row.wx_name1 }}</div>
+                      
+                    </div>
+                  </a>
                   </template>
-                </el-table-column>
-                <el-table-column prop="follow_up" label="当前跟进员工"></el-table-column>
-                <el-table-column prop="last_time" label="上次聊天"></el-table-column>
+              </el-table-column>
+              <el-table-column prop="beizhu" label="好友数"></el-table-column>
+              <el-table-column prop="add_time" label="群总数"></el-table-column>
+              <el-table-column prop="last_time" label="上次聊天"></el-table-column>
+              <el-table-column prop="last_time2" label="手机微信号"></el-table-column>
+              <el-table-column prop="last_time3" label="微信版本"></el-table-column>
+              <el-table-column prop="last_time4" label="手机型号"></el-table-column>
+              <el-table-column prop="last_time5" label="当前登录员工"></el-table-column>
+              <el-table-column prop="last_time6" label="部门"></el-table-column>
+              <el-table-column prop="last_time7" label="角色"></el-table-column>
             </el-table>
             <!-- 分页 -->
             <el-pagination
@@ -91,6 +98,11 @@
   export default {
     data() {
       return {
+        department: '',//员工部门
+        options: [
+            { value: '部门一',label: '部门一'}, 
+            {value: '部门二',label: '部门二'}
+        ],
         loan_id:'',//微信号
         name:'',//昵称
         beizhu:'',//备注
@@ -110,11 +122,12 @@
     methods: {
       //查询
       search1(){
-          if(this.name =='' & this.mobile=='' & this.loan_id==''){
+          if(this.department =='' &this.loan_id =='' & this.name=='' & this.beizhu==''){
               this.$message({message: '请输入搜索条件',type: 'warning'});
           }else{
               //表格渲染
               let json1 = {
+                  department:this.department,
                   loan_id:this.loan_id,
                   name:this.name,
                   beizhu:this.beizhu
@@ -152,12 +165,12 @@
           }
           //表格渲染
           let _this = this;
-          _this.axios.get('/api/haoyouweixin').then((res)=>{
-              console.log(res.data.data);
-              _this.userList = res.data.data
-          }).catch((err)=>{
-              console.log(err);
-          })
+            _this.axios.get('/api/haoyouweixin').then((res)=>{
+                console.log(res.data.data);
+                _this.userList = res.data.data
+            }).catch((err)=>{
+                console.log(err);
+            })
 
           // userList(json2).then(res => {
           //     let _that = this;
@@ -182,6 +195,8 @@
         console.log(index, row);
         this.$router.push({ name:'wechatlist2'})
       }
-    }
+    },
+    
+    
   };
 </script>
