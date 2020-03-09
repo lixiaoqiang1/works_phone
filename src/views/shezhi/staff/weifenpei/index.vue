@@ -1,139 +1,201 @@
 <style scoped>
-.el-tree{
-  width: 300px;
+.callvoice{
+  position: relative;
+}
+.callvoice>>>.trees{
+  width: 250px;position: absolute; left: 0;
+}
+.callvoice>>>.el-tree-node__content{
+  height: 44px;
+}
+.callvoice>>>.tree_node_op{
+  margin-left: 10px;
+}
+.callvoice>>>.tree_node_op i{
+  padding: 0 3px;
+}
+.cont{
+  padding-left: 260px;
 }
 </style>
 <template>
-  <div>
-    <div class="custom-tree-container">
-  <div class="block">
-    <el-tree
-      :data="data"
-      @node-click="btntree"
-      node-key="id"
-      default-expand-all
-      :expand-on-click-node="false"
-      :draggable="true"
-      :render-content="renderContent">
-    </el-tree>
-  </div>
-</div>
-  </div>
+	<div class="callvoice">
+		<div class="trees callvoice padding10">
+			<el-tree ref="tree" :key="tree_key" :data="treeData" @node-click="btntree" node-key="id" :render-content="renderContent" :expand-on-click-node="false" :default-expanded-keys="defaultExpand" :filter-node-method="filterNode"></el-tree>
+      <div class="exam_structure">
+        <el-button type="primary" size="small" class="add_new_question" @click="add_new_question"><i></i>添加父节点</el-button>
+      </div>
+		</div>
+    <div class="cont">
+      <div class=" callvoice padding10">
+        <unabsorbed></unabsorbed>
+      </div>
+    </div>
+	</div>
 </template>
-
 <script>
-  let id = 1000;
-
-  export default {
-    data() {
-      const data = [{
-        id: 1,
-        label: '一级 1',
-        children: [{
-          id: 4,
-          label: '二级 1-1',
-          children: [{
-            id: 9,
-            label: '三级 1-1-1'
-          }, {
-            id: 10,
-            label: '三级 1-1-2'
-          }]
-        }]
-      }, {
-        id: 2,
-        label: '一级 2',
-        children: [{
-          id: 5,
-          label: '二级 2-1'
-        }, {
-          id: 6,
-          label: '二级 2-2'
-        }]
-      }, {
-        id: 3,
-        label: '一级 3',
-        children: [{
-          id: 7,
-          label: '二级 3-1'
-        }, {
-          id: 8,
-          label: '二级 3-2'
-        }]
-      }];
-      return {
-        mingzi:'',
-        data: JSON.parse(JSON.stringify(data)),
-        data: JSON.parse(JSON.stringify(data))
-      }
+import unabsorbed from '@/views/shezhi/staff/weifenpei/commot/unabsorbed'
+	let maxid = 500;
+	export default {
+    name: "tree1",
+    components: {unabsorbed},
+		data() {
+			return {
+				treeData: [{
+						id: 1,
+						label: '未分配员工',
+						isEdit: false,
+						children: [{
+								id: 4,
+								label: '二级 1-1',
+								isEdit: false,
+								children: [{
+									id: 9,
+									label: '三级 1-1-1',
+									isEdit: false,
+									children: []
+								}, {
+									id: 10,
+									label: '三级 1-1-2',
+									isEdit: false,
+									children: []
+								}]
+							},
+						]
+					},
+					{
+						id: 2,
+						label: '速贷中心',
+						isEdit: false,
+						children: [{
+							id: 5,
+							label: '二级 2-1',
+							isEdit: false,
+							children: []
+						}, {
+							id: 6,
+							label: '二级 2-2',
+							isEdit: false,
+							children: []
+						}]
+					},
+					{
+						id: 3,
+						label: '离职员工',
+						isEdit: false,
+						children: [{
+							id: 7,
+							label: '二级 2-1',
+							isEdit: false,
+							children: []
+						}]
+					},
+				],
+				add_question_flag: false,
+				new_question_name: '',
+				tree_key: 0,
+				defaultExpand: []
+			}
     },
-
     methods: {
-      //点击节点
-      btntree(data,index){
-        console.log(data.id);
-      },
-      //添加部门
-      append(data) {
-        console.log(this.mingzi)
-
-        this.$prompt('部门名称', '添加部门', {
-          confirmButtonText: '确认编辑',
-          inputValue:'新建栏目',  //输入框的初始内容
-        }).then(({ value }) => {
-          console.log(value);
-          this.mingzi = value;
-          const newChild = { id: id++, label: this.mingzi, children: [] };
-          if (!data.children) {
-            this.$set(data, 'children', []);
-          }
-          data.children.push(newChild);
-
-        });
-
-        
-      },
-      //删除
-      remove(node, data) {
-        console.log(node, data)
-        const parent = node.parent;
-        const children = parent.data.children || parent.data;
-        const index = children.findIndex(d => d.id === data.id);
-        children.splice(index, 1);
-      },
-      //编辑
-      bianji(data){
-        const newChild = { id: id, label: this.mingzi, children: [] };
-        if (!data) {
-          this.$set(data, 'children', []);
-        }
-        console.log(data)
-        let aaa = { id: 11, label: '你好' }
-        // data.children.push({newChild});
-        
-      },
-      renderContent(h, { node, data, store }) {
-        return (
-          <span class="custom-tree-node">
-            <span>{node.label}</span>
-            <span>
-              <el-button size="mini" type="text" on-click={ () => this.append(data) }>添加</el-button>
-              <el-button size="mini" type="text" on-click={ () => this.remove(node, data) }>删除</el-button>
-              <el-button size="mini" type="text" on-click={ () => this.bianji(node, data, 1) }>编辑</el-button>
-            </span>
-          </span>);
-      }
-    }
-  };
+		//点击节点
+		btntree(data,index){
+			console.log(data.id);
+		},
+		filterNode(value, data) {
+			if(!value) return true;
+			return data.label.indexOf(value) !== -1;
+		},
+		// 添加新大题
+		add_new_question() {
+			// this.add_question_flag = true
+			this.$prompt('部门名称', '添加部门', {
+			confirmButtonText: '确认',
+			inputValue:'新建栏目',  //输入框的初始内容
+			}).then(({ value }) => {
+			this.new_question_name = value;
+			const nodeObj = {id: '',label: this.new_question_name,isEdit: false,children: []}
+			this.treeData.push(nodeObj)
+			this.add_question_flag = false
+			}).catch(() => {
+			this.new_question_name = ''
+			this.$message({
+				type: 'info',
+				message: '已取消'
+			}); 
+			}); 
+		},
+		// 增加
+		append(store, node, data) {
+			this.$prompt('部门名称', '添加部门', {
+				confirmButtonText: '确认',
+				inputValue:'新建栏目',  //输入框的初始内容
+				}).then(({ value }) => {
+				console.log(value);
+				//新增数据
+				const nodeapp = {id: maxid++,label: value,isEdit: false,children: []}
+				data.children.push(nodeapp)
+				if(!node.expanded) {
+					node.expanded = true
+				}
+				const parent = node.parent
+				const children = parent.data
+			});
+		},
+		// 修改
+		nodeEdit(ev, store, data) {
+			this.$prompt('部门名称', '部门名称', {
+			confirmButtonText: '确认',
+			inputValue:data.label,  //输入框的初始内容
+			}).then(({ value }) => {
+			console.log(value);
+			data.label = value
+			}).catch(() => {
+				this.$message({
+					type: 'info',
+					message: '已取消删除'
+				});          
+			});
+		},
+		// 节点删除
+		nodeDelete(node, data) {
+			this.$confirm('确认删除部门?', '提示', {
+			confirmButtonText: '确定',
+			cancelButtonText: '取消',
+			type: 'warning'
+			}).then(() => {
+			const parent = node.parent
+					const children = parent.data.children || parent.data
+					const index = children.findIndex(d => d.id === data.id)
+					children.splice(index, 1)
+			}).catch(() => {
+			this.$message({
+				type: 'info',
+				message: '已取消删除'
+			});          
+			});
+				
+		},
+		showOrEdit(data) {
+			if(data.isEdit) {
+				return <input type="text" value={data.label} on-blur={ev => this.edit_sure(ev, data)}/>
+			} else {
+				return <span className="node_labe">{data.label}</span>
+			}
+		},
+		// 结构树操作group node,
+		renderContent(h, {node,data,store}) {
+			return(
+				<span style="width:100%">
+					<span>{this.showOrEdit(data)}</span>
+					<div class="tree_node_op" style="float: right">
+					<i class="el-icon-plus" on-click={() => this.append(store, node, data)}></i>
+					<i class="el-icon-delete" on-click={() => this.nodeDelete(node, data)}></i>
+					<i class="el-icon-edit" on-click={(ev) => this.nodeEdit(ev, store, data)}></i>
+					</div>
+				</span>
+			)
+		}
+	},
+}
 </script>
-
-<style>
-  .custom-tree-node {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 14px;
-    padding-right: 8px;
-  }
-</style>
