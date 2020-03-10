@@ -21,7 +21,7 @@
   width: 350px;margin: auto;
 }
 .form_o_right .title{
-  text-align: center;color: #3959e7;font-size: 28px;
+  text-align: center;color: #3959e7;font-size: 28px;line-height: 100px;
 }
 .security_code{
   position: relative;
@@ -52,14 +52,14 @@
         <img class="pic2" src="@/assets/images/login1.png">
       </el-col>
       <el-col class="form_o_right" :span="14">
-        <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+        <el-form ref="ruleForm" :model="ruleForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
           <div class="title-container">
             <h3 class="title">登录</h3>
           </div>
           <el-form-item prop="username">
             <el-input
               ref="username"
-              v-model="loginForm.username"
+              v-model="ruleForm.username"
               placeholder="输入手机号" autocomplete="off"
               name="username"
               type="text"
@@ -70,7 +70,7 @@
           <el-form-item prop="code" class="security_code">
             <el-input
               ref="code"
-              v-model="loginForm.code"
+              v-model="ruleForm.code"
               placeholder="输入验证码"
               name="code"
               type="text" :maxlength="4"
@@ -82,7 +82,7 @@
             <el-input
               :key="passwordType"
               ref="password"
-              v-model="loginForm.password"
+              v-model="ruleForm.password"
               :type="passwordType"
               placeholder="输入密码"
               name="password"
@@ -134,7 +134,7 @@ export default {
           backgroundImage: "url(" + require("@/assets/images/login_bj.png") + ")",
           
        },
-      loginForm: {
+      ruleForm: {
         username: '',
         code:'',
         password: ''
@@ -175,7 +175,7 @@ export default {
     //短信倒计时
     sendMsg() {
       let json2 = {
-        username:this.loginForm.username
+        username:this.ruleForm.username
       }
       console.log(json2);
       this.daojishi();
@@ -202,10 +202,10 @@ export default {
     },
     //登录
     handleLogin() {
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.ruleForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
+          this.$store.dispatch('user/login', this.ruleForm).then(() => {
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
           }).catch(() => {
