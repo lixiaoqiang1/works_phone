@@ -49,6 +49,14 @@
             <div class="clearfix"></div>
           </el-form>
         <!-- 头部菜单end -->
+        <!-- 播放器 -->
+            <!-- <aplayer
+            autoplay
+            :music="musicList"
+            :narrow="false"
+            ></aplayer> -->
+            <aplayer autoplay :music="musicList"></aplayer>
+        <!-- 播放器 end-->
 
         <!-- 表格 -->
         <div class="table">
@@ -78,7 +86,7 @@
                 filter-placement="bottom-end"></el-table-column>
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <a class="bule_color">播放</a> <a class="danger_color">下载</a>
+                        <a class="bule_color" @click="btn_bofang(scope.$index, scope.row)">播放</a> <a class="danger_color">下载</a>
                         <!-- <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">下载</el-button> -->
                     </template>
                 </el-table-column>
@@ -94,14 +102,25 @@
                 :total="this.total">
             </el-pagination>
             <!-- 分页end -->
+            
         </div>
         <!-- 表格end -->
     </div>
 </template>
 <script>
+  import aplayer from "vue-aplayer";
   export default {
+    props: ["pdfurl"],
+    components: {aplayer: aplayer},//别忘了引入组件
     data() {
       return {
+        musicList: {
+            title: "youkao100",
+            author: "youkao100",
+            url: 'http://localhost:1122/static/ceshi.mp3',
+            pic: "",
+            lrc: "[00:00.00]lrc here\n[00:01.00]aplayer"
+        },
         selectdata1:'',//日期选择
         department: '',//员工部门
         loan_id:'',//微信号
@@ -118,6 +137,22 @@
         currentPage4: 1,//当前页数
         userList: []//table数据
       };
+    },
+    computed: {
+        url() {
+        return this.pdfurl;
+        }
+    },
+    mounted() {
+        //录音播放
+        this.musicList = {
+        title: "youkao100",
+        author: "youkao100",
+        //   url: this.url,
+        url: 'https://win-web-ra01-sycdn.kuwo.cn/66b7771eabcd5be60f1730b01d935114/5e688d88/resource/n2/128/2/41/686946241.mp3',
+        pic: "",
+        lrc: "[00:00.00]lrc here\n[00:01.00]aplayer"
+        };
     },
     created: function () {
         //表格渲染
@@ -158,6 +193,13 @@
               //         self.push(mess);
               //     }
               //     this.userList = self;
+
+                // musicList.title = this.musicList[i].songname; 
+                // musicList.author = this.musicList[i].singername; 
+                // musicList.url = this.musicList[i].url; 
+                // musicList.pic = this.musicList[i].albumpic_small; 
+                // musicList.lrc = this.musicList[i].irl; 
+
               // }).catch(() => {
               //     this.$message.error('请求错误！');
               // })
@@ -207,6 +249,9 @@
           // }).catch(() => {
           //     this.$message.error('请求错误！');
           // })
+      },
+      btn_bofang(index,row){
+          console.log(index,row);
       }
     }
   };

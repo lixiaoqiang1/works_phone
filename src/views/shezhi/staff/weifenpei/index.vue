@@ -2,17 +2,26 @@
 .callvoice{
   position: relative;
 }
+.callvoice>>>.trees .el-menu-item{
+	padding: 0!important;
+}
+.callvoice>>>.trees .el-submenu__title{
+	padding: 0!important;
+}
+.callvoice .el-menu{
+	border-right: 0;
+}
 .callvoice>>>.trees{
   width: 250px;position: absolute; left: 0;
 }
 .callvoice>>>.el-tree-node__content{
-  height: 44px;
+  height: 44px;font-size: 14px;
 }
-.callvoice>>>.tree_node_op{
+/* .callvoice>>>.tree_node_op{
   margin-left: 10px;
-}
+} */
 .callvoice>>>.tree_node_op i{
-  padding: 0 3px;
+  padding: 0 3px;font-size: 15px;
 }
 .cont{
   padding-left: 260px;
@@ -21,75 +30,58 @@
 <template>
 	<div class="callvoice">
 		<div class="trees callvoice padding10">
-			<el-tree ref="tree" :key="tree_key" :data="treeData" @node-click="btntree" node-key="id" :render-content="renderContent" :expand-on-click-node="false" :default-expanded-keys="defaultExpand" :filter-node-method="filterNode"></el-tree>
-      <div class="exam_structure">
-        <el-button type="primary" size="small" class="add_new_question" @click="add_new_question"><i></i>添加父节点</el-button>
-      </div>
+			<el-menu default-active="1" class="el-menu-vertical-demo" @select="handleSelect">
+				<el-menu-item index="未分配">
+					<i class="el-icon-menu"></i>
+					<span slot="title">未分配部门员工</span>
+				</el-menu-item>
+				<el-submenu index="1">
+					<template slot="title">
+					<i class="el-icon-location"></i>
+					<span>速贷中心</span>
+					</template>
+					<el-tree ref="tree" :key="tree_key" :data="treeData" @node-click="btntree" node-key="id" :render-content="renderContent" :expand-on-click-node="false" :default-expanded-keys="defaultExpand" :filter-node-method="filterNode"></el-tree>
+				</el-submenu>
+				<el-menu-item index="离职员工">
+					<i class="el-icon-setting"></i>
+					<span slot="title">离职员工</span>
+				</el-menu-item>
+			</el-menu>
+			<div class="exam_structure">
+				<el-button type="primary" size="small" class="add_new_question" @click="add_new_question"><i></i>添加父节点</el-button>
+			</div>
 		</div>
-    <div class="cont">
-      <div class=" callvoice padding10">
-        <unabsorbed></unabsorbed>
-      </div>
-    </div>
+		<div class="cont">
+			<div class=" callvoice padding10">
+				<weifenpei v-if="activetype === 'A1'"></weifenpei>
+				<unabsorbed v-if="activetype === 'A2'"></unabsorbed>
+				<lizhi v-if="activetype === 'A3'"></lizhi>
+				<!-- <router-view/> -->
+			</div>
+		</div>
 	</div>
 </template>
 <script>
+import weifenpei from '@/views/shezhi/staff/weifenpei/commot/weifenpei'
 import unabsorbed from '@/views/shezhi/staff/weifenpei/commot/unabsorbed'
+import lizhi from '@/views/shezhi/staff/weifenpei/commot/lizhi'
 	let maxid = 500;
 	export default {
     name: "tree1",
-    components: {unabsorbed},
+    components: {weifenpei,unabsorbed,lizhi},
 		data() {
 			return {
-				treeData: [{
-						id: 1,
-						label: '未分配员工',
-						isEdit: false,
-						children: [{
-								id: 4,
-								label: '二级 1-1',
-								isEdit: false,
-								children: [{
-									id: 9,
-									label: '三级 1-1-1',
-									isEdit: false,
-									children: []
-								}, {
-									id: 10,
-									label: '三级 1-1-2',
-									isEdit: false,
-									children: []
-								}]
-							},
-						]
-					},
+				activetype:'A1',
+				activeIndex: '1',
+				treeData: [
 					{
 						id: 2,
-						label: '速贷中心',
+						label: '部门1',
 						isEdit: false,
-						children: [{
-							id: 5,
-							label: '二级 2-1',
-							isEdit: false,
-							children: []
-						}, {
-							id: 6,
-							label: '二级 2-2',
-							isEdit: false,
-							children: []
-						}]
-					},
-					{
-						id: 3,
-						label: '离职员工',
-						isEdit: false,
-						children: [{
-							id: 7,
-							label: '二级 2-1',
-							isEdit: false,
-							children: []
-						}]
-					},
+						children: [
+							{id: 5,label: '二级 2-1',isEdit: false}
+						]
+					}
 				],
 				add_question_flag: false,
 				new_question_name: '',
@@ -98,8 +90,20 @@ import unabsorbed from '@/views/shezhi/staff/weifenpei/commot/unabsorbed'
 			}
     },
     methods: {
+		handleSelect(key, keyPath) {
+		if(key == '未分配'){
+			console.log('111');
+			this.activetype = 'A1'
+			// this.$router.push({ name:'lizhi2'})
+		}
+		if(key == '离职员工'){
+			this.activetype = 'A3'
+			console.log('222');
+		}
+      },
 		//点击节点
 		btntree(data,index){
+			this.activetype ="A2" 
 			console.log(data.id);
 		},
 		filterNode(value, data) {
@@ -169,10 +173,10 @@ import unabsorbed from '@/views/shezhi/staff/weifenpei/commot/unabsorbed'
 					const index = children.findIndex(d => d.id === data.id)
 					children.splice(index, 1)
 			}).catch(() => {
-			this.$message({
-				type: 'info',
-				message: '已取消删除'
-			});          
+				this.$message({
+					type: 'info',
+					message: '已取消删除'
+				});          
 			});
 				
 		},

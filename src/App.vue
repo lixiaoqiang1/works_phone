@@ -60,7 +60,7 @@ img{
   clear: both;
 }
 .app-main{
-  background:#f7f7f7;padding: 10px;border-radius:4px;
+  background:#f5f5f5;padding: 10px;border-radius:4px;
 }
 .padding10{
   padding:15px 10px;background: white;

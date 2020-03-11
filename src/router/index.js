@@ -73,7 +73,7 @@ export const constantRoutes = [
         component: () => import('@/views/friends/yuangong/index'),
         meta: { title: '员工微信列表', icon: 'example' }
       },
-      {
+      {                                                                                                                             
         path: 'wechatlist2',
         name: 'wechatlist2',
         component: () => import('@/views/friends/yuangong/wechatlist2/index'),
@@ -185,11 +185,6 @@ export const constantRoutes = [
         component: () => import('@/views/shezhi/staff/weifenpei/index'),
         meta: { title: '员工管理', icon: 'example' }
       },
-      // {
-      //   path: 'lizhi',
-      //   component: () => import('@/views/shezhi/staff/lizhi/index'),
-      //   meta: { title: '离职员工', icon: 'example' }
-      // },
       {
         path: 'bindinglog',
         component: () => import('@/views/shezhi/bindinglog/index'),
