@@ -216,7 +216,7 @@ const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes,
-  mode: 'history',  //去掉url中的#
+  mode: 'hash',  //去掉url中的#
 })
 
 const router = createRouter()
