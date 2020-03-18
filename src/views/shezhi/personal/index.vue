@@ -8,6 +8,9 @@
 .padding120>>>.el-form-item__content{
     max-width: 400px;
 }
+.padding120 p{
+    line-height: 26px;
+}
 .btn_right{
     float: right
 }
@@ -49,6 +52,7 @@
     </div>
 </template>
 <script>
+import { editPwd } from '@/api/user'
 export default {
     data(){
         var validatePass = (rule, value, callback) => {
@@ -60,7 +64,7 @@ export default {
                 callback();
             }
         };
-            var validatePass2 = (rule, value, callback) => {
+        var validatePass2 = (rule, value, callback) => {
             if (value === '') {
             callback(new Error('请再次输入密码'));
             } else if (value !== this.resetForm.newpwd) {
@@ -71,9 +75,9 @@ export default {
         };
         return{
             resetForm: {
-                newpwd1: '',
-                newpwd: '',
-                renewpwd: '',
+                newpwd1: '',//原密码
+                newpwd: '',//新密码
+                renewpwd: '',//密码确认
             },
             resetFormRules: {
                 newpwd: [
@@ -83,13 +87,22 @@ export default {
                     { required: true, validator: validatePass2, trigger: 'blur' }
                 ]
             },
-            
-
         }
     },
     methods:{
         btn_baocun(){
-            console.log('保存...')
+            console.log('保存...');
+            let json1 = {
+                password:this.resetForm.newpwd1,
+                confirm_password:this.resetForm.renewpwd
+            }
+            console.log(json1);
+            editPwd(json1).then(res => {
+                this.$message.success('修改成功');
+            this.reload();
+            }).catch(() => {
+                this.$message.error('请求错误！');
+            })
         }
     }
 }

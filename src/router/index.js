@@ -117,7 +117,6 @@ export const constantRoutes = [
       icon: 'tonghua_sms'
     },
     children:[
-     
       {
         path: 'callrecords',
         component: () => import('@/views/call/callrecords/index'),
@@ -190,15 +189,16 @@ export const constantRoutes = [
         component: () => import('@/views/shezhi/bindinglog/index'),
         // meta: { title: '设备绑定日志', icon: 'example' }
       },
-      {
-        path: 'personal',
-        component: () => import('@/views/shezhi/personal/index'),
-        // meta: { title: '个人设置', icon: 'example' }
-      },
+      
       {
         path: 'jurisdiction',
         component: () => import('@/views/shezhi/permissions/jurisdiction/index'),
         meta: { title: '权限设置', icon: 'example' }
+      },
+      {
+        path: 'personal',
+        component: () => import('@/views/shezhi/personal/index'),
+        meta: { title: '个人设置', icon: 'example' }
       },
       {
         path: 'configuration',

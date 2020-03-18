@@ -19,6 +19,7 @@ Vue.prototype.$echarts = echarts
 
 import VCharts from 'v-charts'
 Vue.use(VCharts)
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api

@@ -18,7 +18,7 @@
 <template>
     <div class="callvoice padding10">
         <div class="list">
-            <p>{{id1}}</p>
+            <p>{{route_id}}</p>
             <h4>PC端管理后台全局设置</h4>
             <div class="item-list">
                 <label>可视数据范围：</label>
@@ -72,10 +72,11 @@
     </div>
 </template>
 <script>
+import { huoquroles } from '@/api/user'
 export default {
     data(){
         return{
-            id1:this.$route.query.id,//上级传参id
+            route_id:this.$route.query.id,//上级传参id
 
             radio1: '1',
             radio2: '1',
@@ -109,9 +110,22 @@ export default {
     },
     methods: {
         //渲染
-        handleUserList(){
-            console.log('axios')
-        },
+        handleUserList() {
+            let json1 = {
+                id:this.$route.query.id,
+                is_menu:1
+            }
+            huoquroles(json1).then(res => {
+                console.log(res)
+                let _that = this;
+                let result = res.data.lists;
+                console.log(result)
+                _that.userList = result;
+
+            }).catch(() => {
+                this.$message.error('请求错误！');
+            })
+      },
       //全选1
       handleCheckAllChange1(val) {
         this.checkedCities1 = val ? this.cities1 : [];

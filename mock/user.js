@@ -29,8 +29,8 @@ export default [
     url: '/user/login',
     type: 'post',
     response: config => {
-      const { username } = config.body
-      const token = tokens[username]
+      const { mobile } = config.body
+      const token = tokens[mobile]
 
       // mock error
       if (!token) {

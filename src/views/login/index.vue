@@ -56,12 +56,12 @@
           <div class="title-container">
             <h3 class="title">登录</h3>
           </div>
-          <el-form-item prop="username">
+          <el-form-item prop="mobile">
             <el-input
-              ref="username"
-              v-model="ruleForm.username"
+              ref="mobile"
+              v-model="ruleForm.mobile"
               placeholder="输入手机号" autocomplete="off"
-              name="username"
+              name="mobile"
               type="text"
               tabindex="1"
               auto-complete="on"
@@ -79,20 +79,22 @@
             <a class="yanzheng" @click="sendMsg">{{buttonName}}</a>
           </el-form-item>
           <el-form-item class="passwords" prop="password">
+            <!-- passwordType -->
             <el-input
               :key="passwordType"
               ref="password"
               v-model="ruleForm.password"
-              :type="passwordType"
               placeholder="输入密码"
+              value=""
+              :type="text"
               name="password"
               tabindex="2"
               auto-complete="on"
               @keyup.enter.native="handleLogin"
             />
-            <span class="show-pwd" @click="showPwd">
+            <!-- <span class="show-pwd" @click="showPwd">
               <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-            </span>
+            </span> -->
           </el-form-item>
           <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
           <div class="tips">
@@ -110,7 +112,7 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
-
+import { sendCode } from '@/api/user'
 export default {
   name: 'Login',
   data() {
@@ -136,13 +138,13 @@ export default {
           
        },
       ruleForm: {
-        username: '',
+        mobile: '',
         code:'',
         password: ''
       },
       //验证
       loginRules: {
-        username: [{ required: true, validator: validateUsername, trigger: 'blur' }],
+        mobile: [{ required: true, validator: validateUsername, trigger: 'blur' }],
         password: [{ required: true,validator: validatePassword, trigger: 'blur' }]
       },
       buttonName: "发送短信",
@@ -162,6 +164,10 @@ export default {
       immediate: true
     }
   },
+  //页面加载调用获取cookie值
+  mounted() {
+      this.getCookie();
+  },
   methods: {
     showPwd() {
       if (this.passwordType === 'password') {
@@ -169,22 +175,28 @@ export default {
       } else {
         this.passwordType = 'password'
       }
-      this.$nextTick(() => {
-        this.$refs.password.focus()
-      })
+      // this.$nextTick(() => {
+      //   this.$refs.password.focus()
+      // })
     },
     //短信倒计时
     sendMsg() {
-      let json2 = {
-        username:this.ruleForm.username
+      if(this.ruleForm.mobile == ''){
+        alert('手机号不能为空');
+        return;
+      }else{
+        let json2 = {
+          mobile:this.ruleForm.mobile
+        }
+        console.log(json2);
+        this.daojishi();
+        sendCode(json2).then(res => {
+            this.daojishi();
+        }).catch(() => {
+            this.$message.error('请求错误！');
+        })
       }
-      console.log(json2);
-      this.daojishi();
-      // sendCode(json2).then(res => {
-      //     this.daojishi();
-      // }).catch(() => {
-      //     this.$message.error('请求错误！');
-      // })
+      
     },
     //倒计时
     daojishi(){
@@ -203,10 +215,14 @@ export default {
     },
     //登录
     handleLogin() {
+      console.log(this.ruleForm)
       this.$refs.ruleForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.ruleForm).then(() => {
+          this.$store.dispatch('user/login', this.ruleForm).then((res) => {
+            console.log(res)
+            //传入账号名，密码，和保存天数3个参数
+            this.setCookie(this.ruleForm.mobile,this.ruleForm.password,7);
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
           }).catch(() => {
@@ -217,7 +233,30 @@ export default {
           return false
         }
       })
-    }
+    },
+    //设置cookie
+    setCookie(c_name, c_pwd, exdays) {
+        var exdate = new Date(); //获取时间
+        exdate.setTime(exdate.getTime() + 24 * 60 * 60 * 1000 * exdays); //保存的天数
+        //字符串拼接cookie
+        window.document.cookie = "userName" + "=" + c_name + ";path=/;expires=" + exdate.toGMTString();
+        window.document.cookie = "userPwd" + "=" + c_pwd + ";path=/;expires=" + exdate.toGMTString();
+    },
+    //读取cookie
+    getCookie: function() {
+        if (document.cookie.length > 0) {
+            var arr = document.cookie.split('; '); //这里显示的格式需要切割一下自己可输出看下
+            for (var i = 0; i < arr.length; i++) {
+                var arr2 = arr[i].split('='); //再次切割
+                //判断查找相对应的值
+                if (arr2[0] == 'userName') {
+                    this.ruleForm.mobile = arr2[1]; //保存到保存数据的地方
+                } else if (arr2[0] == 'userPwd') {
+                    this.ruleForm.password = arr2[1];
+                }
+            }
+        }
+    },
   }
 }
 </script>

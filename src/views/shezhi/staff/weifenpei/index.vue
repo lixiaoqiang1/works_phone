@@ -26,6 +26,12 @@
 .cont{
   padding-left: 260px;
 }
+.exam_structure{
+	width: 100%;
+}
+.exam_structure button{
+	width: 100%;
+}
 </style>
 <template>
 	<div class="callvoice">
@@ -48,7 +54,7 @@
 				</el-menu-item>
 			</el-menu>
 			<div class="exam_structure">
-				<el-button type="primary" size="small" class="add_new_question" @click="add_new_question"><i></i>添加父节点</el-button>
+				<el-button type="primary" size="small" class="add_new_question" @click="add_new_question"><i class="el-icon-plus"></i> 添加部门</el-button>
 			</div>
 		</div>
 		<div class="cont">
@@ -112,7 +118,6 @@ import lizhi from '@/views/shezhi/staff/weifenpei/commot/lizhi'
 		},
 		// 添加新大题
 		add_new_question() {
-			// this.add_question_flag = true
 			this.$prompt('部门名称', '添加部门', {
 			confirmButtonText: '确认',
 			inputValue:'新建栏目',  //输入框的初始内容
