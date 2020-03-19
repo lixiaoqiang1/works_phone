@@ -67,7 +67,7 @@
               auto-complete="on"
             />
           </el-form-item>
-          <el-form-item prop="code" class="security_code">
+          <el-form-item prop="code" class="security_code"  v-show="yanzhengtype == true">
             <el-input
               ref="code"
               v-model="ruleForm.code"
@@ -86,22 +86,20 @@
               v-model="ruleForm.password"
               placeholder="输入密码"
               value=""
-              :type="text"
+              :type="passwordType"
               name="password"
               tabindex="2"
               auto-complete="on"
               @keyup.enter.native="handleLogin"
             />
-            <!-- <span class="show-pwd" @click="showPwd">
+            <span class="show-pwd" @click="showPwd">
               <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-            </span> -->
+            </span>
           </el-form-item>
           <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
           <div class="tips">
             <span style="margin-right:20px;">用户名: 15625053620</span>
             <span> 密码: haiyun</span>
-            <span style="margin-right:20px;">用户名: admin</span>
-            <span> 密码: any</span>
           </div>
 
         </el-form>
@@ -112,9 +110,18 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
-import { sendCode } from '@/api/user'
+import { sendCode,need_code } from '@/api/user'
+// import Cookies from 'js-cookie'
+// import { getToken, setToken, removeToken,getToken1} from '@/utils/auth'
+const TokenKey = 'vue_admin_template_token'
 export default {
   name: 'Login',
+  //页面加载调用获取cookie值
+  mounted() {
+      this.getCookie();
+      // return Cookies.get(TokenKey)
+      // return Cookies.get(TokenKey)
+  },
   data() {
     //账号验证
     const validateUsername = (rule, value, callback) => {
@@ -133,6 +140,7 @@ export default {
       }
     }
     return {
+      yanzhengtype:'',
       setBackground: {
           backgroundImage: "url(" + require("@/assets/images/login_bj.png") + ")",
           
@@ -156,6 +164,7 @@ export default {
       redirect: undefined
     }
   },
+  
   watch: {
     $route: {
       handler: function(route) {
@@ -164,10 +173,6 @@ export default {
       immediate: true
     }
   },
-  //页面加载调用获取cookie值
-  mounted() {
-      this.getCookie();
-  },
   methods: {
     showPwd() {
       if (this.passwordType === 'password') {
@@ -175,28 +180,24 @@ export default {
       } else {
         this.passwordType = 'password'
       }
-      // this.$nextTick(() => {
-      //   this.$refs.password.focus()
-      // })
     },
     //短信倒计时
     sendMsg() {
       if(this.ruleForm.mobile == ''){
-        alert('手机号不能为空');
-        return;
+        this.$message.error('请输入正确手机号');
+        return false;
       }else{
         let json2 = {
           mobile:this.ruleForm.mobile
         }
-        console.log(json2);
         this.daojishi();
         sendCode(json2).then(res => {
+          console.log(res)
             this.daojishi();
         }).catch(() => {
             this.$message.error('请求错误！');
         })
       }
-      
     },
     //倒计时
     daojishi(){
@@ -215,17 +216,32 @@ export default {
     },
     //登录
     handleLogin() {
-      console.log(this.ruleForm)
+      let json1 = {mobile:this.ruleForm.mobile}
+      need_code(json1).then(res => {
+          console.log(res.data.need);
+          let type = res.data.need;
+          if(type == true){
+            // 需要验证
+            this.yanzhengtype = true;
+          }else{
+             //不需要验证
+             this.yanzhengtype = '';
+          }
+      }).catch((err) => {
+        this.$message.error(err.msg);
+      })
       this.$refs.ruleForm.validate(valid => {
+        console.log(this.ruleForm);
         if (valid) {
           this.loading = true
           this.$store.dispatch('user/login', this.ruleForm).then((res) => {
-            console.log(res)
             //传入账号名，密码，和保存天数3个参数
             this.setCookie(this.ruleForm.mobile,this.ruleForm.password,7);
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
-          }).catch(() => {
+          }).catch((err) => {
+            console.log(err.msg)
+            this.$message.error(err.msg);
             this.loading = false
           })
         } else {

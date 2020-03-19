@@ -1,5 +1,21 @@
 import request from '@/utils/request'
 
+//用户获取验证码
+export function need_code(data) {
+  return request({
+    url: '/need_code',
+    method: 'post',
+    data
+  })
+}
+//验证码
+export function sendCode(data) {
+  return request({
+    url: '/send_code',
+    method: 'post',
+    data
+  })
+}
 //登录
 export function login(data) {
   return request({
@@ -8,20 +24,13 @@ export function login(data) {
     data
   })
 }
-
 export function getInfo() {
   return request({
     url: '/api/v1/userInfo',
     method: 'get'
   })
 }
-//验证码
-export function sendCode() {
-  // return request({
-  //   url: '/send_code',
-  //   method: 'post'
-  // })
-}
+
 //退出
 export function logout() {
   return request({
