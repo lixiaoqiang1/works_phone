@@ -44,7 +44,7 @@
                 <el-table-column prop="day" label="日期" width="140"></el-table-column>
                 <el-table-column prop="username" label="员工姓名"></el-table-column>
                 <el-table-column prop="department" label="部门"></el-table-column>
-                <el-table-column prop="department_big" label="角色" 
+                <el-table-column prop="Position" label="角色" 
                 :filters="[{ text: '顾问', value: '顾问' },{ text: '部门主管', value: '部门主管' },{ text: '负责人', value: '负责人' }]"
                 :filter-method="filterTag"
                 filter-placement="bottom-end"></el-table-column>
@@ -168,7 +168,7 @@ import { company,callRecords1,searchRecords } from '@/api/user'
         },
         //角色
         filterTag(value, row) {
-            return row.role === value;
+            return row.Position === value;
         },
         //是否接通
         filterjt(value, row) {

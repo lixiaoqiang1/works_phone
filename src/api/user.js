@@ -38,6 +38,15 @@ export function logout() {
     method: 'GET'
   })
 }
+
+//员工微信列表
+export function wechatusers(query) {
+  return request({
+    url: '/api/v1/wechat/users',
+    method: 'GET',
+    params: query
+  })
+}
 //获取所有设备接口
 export function allshebei(query) {
   return request({
@@ -126,17 +135,26 @@ export function rolesdelete(data) {
   return request({
     url: '/api/v1/roles/'+ data.id,
     method: 'delete',
+    method: 'GET',
     data
   })
 }
+//获取指定菜单
+// export function menus_id(data) {
+//   return request({
+//     url: '/api/v1/menus',
+//     params: data
+//   })
+// }
+
 // 获取所有角色
-export function huoquroles(query) {
-  return request({
-    url: '/api/v1/roles',
-    method: 'GET',
-    params: query
-  })
-}
+// export function huoquroles(query) {
+//   return request({
+//     url: '/api/v1/roles',
+//     method: 'GET',
+//     params: query
+//   })
+// }
 //获取绑定日志接口
 export function bindLogs(query) {
   return request({

@@ -34,20 +34,20 @@
             <div class="top_list">
                 <el-select v-model="department" placeholder="选择部门">
                     <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                    </el-option>
+                        v-for="item in options"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.name">
+                        </el-option>
                 </el-select>
             </div>
-            <el-input class="top_list" placeholder="请输入微信号" v-model="loan_id">
+            <el-input class="top_list" placeholder="请输入微信号" v-model="alias">
                 <template slot="prepend">微信号</template>
             </el-input>
-            <el-input class="top_list" placeholder="请输入昵称" v-model="name">
+            <el-input class="top_list" placeholder="请输入昵称" v-model="w_name">
                 <template slot="prepend">昵称</template>
             </el-input>
-            <el-input class="top_list" placeholder="请输入备注" v-model="beizhu">
+            <el-input class="top_list" placeholder="请输入备注" v-model="username">
                 <template slot="prepend">备注</template>
             </el-input>
             <el-button class="top_list idbtn" type="primary" @click="search1">查询</el-button>
@@ -62,22 +62,23 @@
                   <a class="handleEdit" @click="handleEdit(scope.$index, scope.row)">
                     <div class="wxid"><img :src="scope.row.images1"></div>
                     <div class="wxid">
-                      <div class="wx_list">{{ scope.row.wx_id1 }}</div>
-                      <div class="wx_list">{{ scope.row.wx_name1 }}</div>
+                      <div class="wx_list">{{ scope.row.w_id }}</div>
+                      <div class="wx_list">{{ scope.row.w_name }}</div>
                       
                     </div>
                   </a>
                   </template>
               </el-table-column>
-              <el-table-column prop="beizhu" label="好友数"></el-table-column>
-              <el-table-column prop="add_time" label="群总数"></el-table-column>
-              <el-table-column prop="last_time" label="上次聊天"></el-table-column>
-              <el-table-column prop="last_time2" label="手机微信号"></el-table-column>
-              <el-table-column prop="last_time3" label="微信版本"></el-table-column>
-              <el-table-column prop="last_time4" label="手机型号"></el-table-column>
-              <el-table-column prop="last_time5" label="当前登录员工"></el-table-column>
-              <el-table-column prop="last_time6" label="部门"></el-table-column>
-              <el-table-column prop="last_time7" label="角色"></el-table-column>
+              <el-table-column prop="user_num" label="好友数"></el-table-column>
+              <el-table-column prop="chatroom_num" label="群总数"></el-table-column>
+              <el-table-column prop="last_chat_time" label="上次聊天"></el-table-column>
+              <el-table-column prop="alias" label="手机微信号"></el-table-column>
+              <el-table-column prop="" label="微信版本"></el-table-column>
+              <el-table-column prop="" label="手机型号"></el-table-column>
+              <el-table-column prop="username" label="当前登录员工"></el-table-column>
+              <el-table-column prop="imei" label="IMEI"></el-table-column>
+              <el-table-column prop="company" label="部门"></el-table-column>
+              <el-table-column prop="position" label="角色"></el-table-column>
             </el-table>
             <!-- 分页 -->
             <el-pagination
@@ -95,17 +96,15 @@
     </div>
 </template>
 <script>
+import { company,wechatusers } from '@/api/user'
   export default {
     data() {
       return {
+        options: [],
         department: '',//员工部门
-        options: [
-            { value: '部门一',label: '部门一'}, 
-            {value: '部门二',label: '部门二'}
-        ],
-        loan_id:'',//微信号
-        name:'',//昵称
-        beizhu:'',//备注
+        alias:'',//微信号
+        username:'',//昵称
+        w_name:'',//备注
         search:'',//搜索
         total:100,//总条数
         pageSize:50,//每页条数
@@ -116,36 +115,15 @@
     },
     inject:['reload'],//刷新当前页
     created: function () {
+      //部门渲染
+        this.companys();
         //表格渲染
         this.handleUserList();
     },
     methods: {
       //查询
       search1(){
-          if(this.department =='' &this.loan_id =='' & this.name=='' & this.beizhu==''){
-              this.$message({message: '请输入搜索条件',type: 'warning'});
-          }else{
-              //表格渲染
-              let json1 = {
-                  department:this.department,
-                  loan_id:this.loan_id,
-                  name:this.name,
-                  beizhu:this.beizhu
-              }
-              console.log(json1)
-              // MyLoans(json1).then(res => {
-              //     let result = res.data.lists;
-              //     let mess;
-              //     let self = [];
-              //     for(let key in result){
-              //         mess = result[key];
-              //         self.push(mess);
-              //     }
-              //     this.userList = self;
-              // }).catch(() => {
-              //     this.$message.error('请求错误！');
-              // })
-          }
+        this.handleUserList();
       },
       //每页条数
       handleSizeChange(val) {
@@ -157,39 +135,33 @@
           this.currentPage = val;
           this.handleUserList();
       },
+      companys(){
+          //部门渲染
+          company().then(res => {
+              console.log(res.data);
+              this.options = res.data
+          }).catch(() => {
+              this.$message.error('请求错误！');
+          })
+        },
       handleUserList() {
           //表格渲染
-          let json2 = {
-              limit:this.pageSize, //每页条数
-              page:this.currentPage//选择跳页
+          let json1 = {
+            pageSize:this.pageSize, //每页条数
+            page:this.currentPage,//选择跳页
+            department:this.department,
+            alias:this.alias,//微信号
+            username:this.username,//昵称
+            w_name:this.w_name,//备注
           }
           //表格渲染
-          let _this = this;
-            _this.axios.get('/api/haoyouweixin').then((res)=>{
-                console.log(res.data.data);
-                _this.userList = res.data.data
-            }).catch((err)=>{
-                console.log(err);
+            wechatusers(json1).then(res => {
+              console.log(res)
+                this.userList = res.data.list;
+                this.total = res.data.total;    
+                }).catch(() => {
+                    this.$message.error('请求错误！');
             })
-
-          // userList(json2).then(res => {
-          //     let _that = this;
-          //     let result = res.data.lists;
-          //     console.log(res.data)
-
-          //     let mess;
-          //     let self = [];
-          //     for(let key in result){
-          //         mess = result[key];
-          //         self.push(mess);
-          //     }
-          //     _that.total = res.data.total;
-          //     _that.pageSize = res.data.per_page
-          //     _that.userList = self;
-
-          // }).catch(() => {
-          //     this.$message.error('请求错误！');
-          // })
       },
       handleEdit(index, row){
         console.log(index, row);

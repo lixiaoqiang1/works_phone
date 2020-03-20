@@ -52,31 +52,27 @@
         <!-- 头部菜单end -->
         <div class="audio_o">
             <audio ref="audio" style="width: 178px;height: 34px;" :src="url1" title="你好" autoplay controls="controls" preload></audio>
-            <!-- <audio ref="audio" :src="audioUrl"></audio> -->
         </div>
-            
-        <!-- 播放器 end-->
-
         <!-- 表格 -->
         <div class="table">
             <el-table stripe :data="userList" style="width: 100%">
-                <el-table-column prop="call_time" label="日期" width="180"></el-table-column>
+                <el-table-column prop="day" label="日期"></el-table-column>
                 <el-table-column prop="remark" label="客户备注" width="180"></el-table-column>
                 <el-table-column prop="number" label="客户电话"></el-table-column>
                 <el-table-column prop="type" label="通话类型" :formatter="case_type"
-                :filters="[{ text: '呼入', value: '呼入' },{ text: '呼出', value: '呼出' }]"
+                :filters="[{ text: '呼入', value: 1 },{ text: '呼出', value: 2 }]"
                 :filter-method="filterTtype"
                 filter-placement="bottom-end"></el-table-column>
-                <el-table-column prop="through" label="是否接通" :formatter="case_type"
-                :filters="[{ text: '已接通', value: '已接通' },{ text: '未接通', value: '未接通' },]"
-                :filter-method="filterjt"
-                filter-placement="bottom-end">
+                <el-table-column prop="type" label="是否接通" :formatter="case_type1"
+                :filters="[{ text: '未接通', value: '未接通'},{ text: '已接通', value: '已接通'}]"
+                :filter-method="filterTtype"
+                filter-placement="bottom-end"></el-table-column>
+                <el-table-column prop="call_time" label="通话开始时间">
                     <template slot-scope="scope">
-                        <span :class="scope.row.through === '已接通' ? 'through_primary' : 'through_danger'">{{scope.row.through}}</span>
+                        <span>{{parseTimeStr(scope.row.call_time)}}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="start_time" label="通话开始时间"></el-table-column>
-                <el-table-column prop="length_time" label="通话时长"></el-table-column>
+                <el-table-column prop="duration" label="通话时长"></el-table-column>
                 <el-table-column prop="username" label="员工姓名"></el-table-column>
                 <el-table-column prop="department" label="部门"></el-table-column>
                 <el-table-column prop="Position" label="角色" 
@@ -87,7 +83,6 @@
                     <template slot-scope="scope">
                         <a class="bule_color" @click="btn_bofang(scope.$index, scope.row)">播放</a>
                         <a class="danger_color" @click="btn_download(scope.$index, scope.row)">下载</a>
-                        <!-- <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">下载</el-button> -->
                     </template>
                 </el-table-column>
             </el-table>
@@ -102,7 +97,6 @@
                 :total="this.total">
             </el-pagination>
             <!-- 分页end -->
-            
         </div>
         <!-- 表格end -->
     </div>
@@ -110,6 +104,7 @@
 <script>
   import datapicker2 from '@/components/Datapicker2'
   import {company, records } from '@/api/user'
+  import { parseTime } from '@/utils/index'
   export default {
     components: {datapicker2},//别忘了引入组件
     data() {
@@ -139,6 +134,10 @@
         this.handleUserList();
     },
     methods: {
+        //时间戳转化
+        parseTimeStr (val){
+            return parseTime(val)
+        },
         //日期选择
         dateValue: function (dateValue) {
             this.dateValue1 = dateValue;
@@ -150,7 +149,7 @@
         },
         //角色
         filterTag(value, row) {
-            return row.Position === value;
+            return row.position === value;
         },
         //是否接通
         filterjt(value, row) {
@@ -205,7 +204,6 @@
           console.log('111')
           this.url1 = 'https://'+ row.recording_path
           this.$refs.audio.play()
-          
       },
       //下载音频
       btn_download(index,row){
@@ -220,13 +218,19 @@
                     return "呼入";break;
                 case 2:
                     return "呼出";break;
-                case 3:
-                    return "呼出未接";break;
-                case 5:
-                    return "呼入未接";break;
-                
             } 
-        }
+        },
+        case_type1(val){
+            let _type = val.type;
+            switch(_type) {
+                case 3:
+                    return "未接通";break;
+                case 5:
+                    return "未接通";break;
+                default:
+                    return "已接通";break; 
+            } 
+        },
     }
   };
 </script>
