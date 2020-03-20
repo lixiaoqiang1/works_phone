@@ -85,7 +85,18 @@ import lizhi from '@/views/shezhi/staff/weifenpei/commot/lizhi'
 						label: '部门1',
 						isEdit: false,
 						children: [
-							{id: 5,label: '二级 2-1',isEdit: false}
+							{
+								id: 5,
+								label: '二级 2-1',
+								isEdit: false,
+								children: []
+							},
+							{
+								id: 6,
+								label: '二级 2-2',
+								isEdit: false,
+								children: []
+							}
 						]
 					}
 				],
